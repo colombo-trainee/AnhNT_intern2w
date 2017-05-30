@@ -18,7 +18,7 @@ class CreateListFoodsTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->float('price', 8, 2);
-            $table->string('description');
+            $table->text('description');
             $table->tinyInteger('category_id');
             $table->tinyInteger('special');
             $table->softDeletes();

@@ -11,5 +11,5 @@ class orderTable extends Model
 	'name', 'email','date','partyNumber',
 	];
 	protected $dates = ['deleted_at'];
-	protected $table="order_tables";
+	protected $table = 'order_tables';
 }

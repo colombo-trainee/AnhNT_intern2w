@@ -9,7 +9,23 @@
 	
 	<!-- font -->
 	<link href="https://fonts.googleapis.com/css?family=Gentium+Book+Basic|Lato|Open+Sans|Yeseva+One" rel="stylesheet">
+	<style type="text/css" media="screen">
+		.alert-danger{
+			display: none;
+			font-size: 12px;
+			position: absolute;
+			bottom: -28px;
+			width: 100%;
+		}
+		.rs-form{
+			position: relative;
+		}
+		.has-error{
+			display: block;
+			
 
+		}
+	</style>
 	<script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/masonry.pkgd.js') }}"></script>
@@ -28,11 +44,9 @@
 					<nav class="navbar-custom">
 						<ul>
 							<li><a href="#" id="home">Home</a></li>
-							<li><a href="#" id="about">About</a></li>
-							<li><a href="#" id="igredients">Igredients</a></li>
-							<li><a href="#" id="menu">Menu</a></li>
-							<li><a href="#" id="reviews">Reviews</a></li>
-							<li><a href="#" id="reservations">Reservations</a></li>
+							@foreach ($datasMenuT as $menuT)
+								<li><a href="#" id="{{ $menuT->slug_name }}">{{ $menuT->name }}</a></li>
+							@endforeach
 							<li class="social">
 								<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
 								<a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a>
@@ -89,121 +103,25 @@
 	<!-- /ingredients -->
 	<div class="container">
 		<section class="menu row grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 50% }'>
+		@foreach ($datasMenuF as $dataF)
 			<div class="col-md-6 grid-item">
 				<div class="menu-title text-center">
-					<p>Appetisers</p>
+					<p>{{$dataF->category->name}}</p>
 					<img src="img/ss-content-hr.png" alt="">
 				</div>
-				<div class="menu-sub">
+				<div class="menu-sub {{$dataF->special == 1 ? 'menu-special' : ''}}">
 					<div class="titleNprice">
-						<p class="title pull-left">Tzatsiki</p>
-						<p class="price pull-right">$3.99</p>
+						<p class="title pull-left">
+							{{$dataF->name}}
+						</p>
+						<p class="price pull-right">{{$dataF->price}}</p>
 					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-				<div class="menu-sub">
-					<div class="titleNprice">
-						<p class="title pull-left">Aubergine Salad</p>
-						<p class="price pull-right" >$5.50</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-				<div class="menu-sub">
-					<div class="titleNprice">
-						<p class="title pull-left">Aubergine Salad</p>
-						<p class="price pull-right" >$5.25</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-				
-
-			</div>
-			<div class="col-md-6 grid-item">
-				<div class="menu-title text-center">
-					<p>Starters</p>
-					<img src="img/ss-content-hr.png" alt="">
-				</div>
-				<div class="menu-sub">
-					<div class="titleNprice">
-						<p class="title pull-left">Haloumi</p>
-						<p class="price pull-right" >$3.99</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-				<div class="menu-sub">
-					<div class="titleNprice">
-						<p class="title pull-left">Spinach Pie</p>
-						<p class="price pull-right" >$5.50</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-				
-
-			</div>
-			<div class="col-md-6 grid-item">
-				<div class="menu-title text-center">
-					<p>Salads</p>
-					<img src="img/ss-content-hr.png" alt="">
-				</div>
-				<div class="menu-sub">
-					<div class="titleNprice">
-						<p class="title pull-left">Olive Special</p>
-						<p class="price pull-right">$5.99</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-				<div class="menu-sub menu-special">
-					<div class="titleNprice">
-						<p class="title pull-left">Greek Salad</p>
-						<p class="price pull-right">$5.50</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-				<div class="menu-sub">
-					<div class="titleNprice">
-						<p class="title pull-left">Gusto Salad</p>
-						<p class="price pull-right" >$5.25</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-				<div class="menu-sub">
-					<div class="titleNprice">
-						<p class="title pull-left">Pastitsio</p>
-						<p class="price pull-right" >$5.99</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
+					<div class="description">{{$dataF->description}}</div>
 				</div>
 
-				
 
 			</div>
-			<div class="col-md-6 grid-item">
-				<div class="menu-title text-center">
-					<p>Main Dishes</p>
-					<img src="img/ss-content-hr.png" alt="">
-				</div>
-				<div class="menu-sub">
-					<div class="titleNprice">
-						<p class="title pull-left">Cornish Mackerel</p>
-						<p class="price pull-right">$5.99</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-				<div class="menu-sub menu-special">
-					<div class="titleNprice">
-						<p class="title pull-left">Roast Lamb</p>
-						<p class="price pull-right" >$5.50</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-				<div class="menu-sub ">
-					<div class="titleNprice">
-						<p class="title pull-left">Fried Chicken</p>
-						<p class="price pull-right" >$5.25</p>
-					</div>
-					<div class="description">Refreshing traditional cucumber and garlic yoghurt dip.</div>
-				</div>
-			</div>
+			@endforeach
 		</section>
 	</div>
 	<!-- /menu -->
@@ -237,25 +155,28 @@
 					</div>
 				</div>
 				<div class="reservations-form">
-					<form action="" method="POST" role="form">
+					<form action="{{route('order-table.store')}}" method="POST" role="form">
+						{{csrf_field()}}
 						<div class="form-group rs-form">
 							<label for="">Name</label>
 							<input type="text" class="form-control" name="name" placeholder="your name*" required>
+							<p class="alert-danger text-center {{ $errors->has('name') ? 'has-error' : '' }}">{{$errors->first('name')}}</p>
 						</div>
 						<div class="form-group rs-form">
 							<label for="">Email</label>
 							<input type="email" class="form-control" name="email" placeholder="your email*" required>
+							<p class="alert-danger text-center {{ $errors->has('email') ? 'has-error' : '' }}">{{$errors->first('email')}}</p>
 						</div>
 						<div class="form-group rs-form">
 							<label for="">Date</label>
 							<input type="date" class="form-control" name="date" required>
+							<p class="alert-danger text-center {{ $errors->has('date') ? 'has-error' : '' }}">{{$errors->first('date')}}</p>
 						</div>
 						<div class="form-group rs-form">
 							<label for="">Party number</label>
-							<input type="number" class="form-control" name="part_number" placeholder="Party number">
+							<input type="number" class="form-control" name="partyNumber" placeholder="Party number">
+							<p class="alert-danger text-center {{ $errors->has('partyNumber') ? 'has-error' : '' }}">{{$errors->first('partyNumber')}}</p>
 						</div>
-
-						
 
 						<button type="submit" class="btn btn-orange" style="display: block;margin: 0 auto;">Book now!</button>
 					</form>
@@ -292,7 +213,7 @@
 					</div>
 				</div>
 				<div class="col-md-4 AboutUs text-center">
-					<div class="About-title">About Us</div>
+					<div class="About-title">Our Location</div>
 					<img src="img/ss-ingre-hr.png" alt="">
 					<div class="About-des">
 						<div class="addwork">
@@ -315,6 +236,15 @@
 
 
 	<script type="text/javascript" src="js/main.js"></script>
-	
+	@if (session('fail'))
+	<script>
+		$.notify("{{session('fail')}}", "error");
+		$('html, body').animate({ scrollTop: $('.reservations').offset().top }, 1000);
+	</script>
+
+	@endif
+	@if (session('status'))
+	<script>$.notify("{{session('status')}}", "success",{ position:"top center" });</script>
+	@endif
 </body>
 </html>

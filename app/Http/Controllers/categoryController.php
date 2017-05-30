@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\category;
+use App\Models\listFood;
+use Illuminate\Support\Facades\Validator as Validator;
+use DB;
 class categoryController extends Controller
 {
     /**
@@ -13,8 +16,9 @@ class categoryController extends Controller
      */
     public function index()
     {
-        $datas = category::all();
-        return view('');
+        $datas = category::orderBy('id','desc')->paginate(5);
+        $dataFood = listFood::all();
+        return view('category.viewlist',compact('datas','dataFood'));
     }
 
     /**
@@ -24,7 +28,7 @@ class categoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create');
     }
 
     /**
@@ -35,7 +39,34 @@ class categoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        
+
+        $validator = Validator::make($data,[
+            'name' => 'required|unique:categories',
+            ]);
+
+        if ($validator->fails()  ) {
+            return redirect()->back()->withInput($data)->withErrors($validator);
+        }  else{
+            DB::beginTransaction();
+
+            try {
+                category::create([
+                    'name' => $data['name'],             
+                    ]);        
+                DB::commit();
+                $msg='Đã thêm thành công';
+                return redirect(route('category.index'))->with('status', $msg);
+
+                            // all good
+            } catch (\Exception $e) {
+                \Log::info($e->getMessage());
+                DB::rollback();
+                            // something went wrong
+            }
+            
+        }
     }
 
     /**
@@ -46,7 +77,9 @@ class categoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = category::find($id);
+        $dataFood = listFood::all();
+        return view('category.show',compact('data','dataFood'));
     }
 
     /**
@@ -57,7 +90,8 @@ class categoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = category::find($id);
+        return view('category.edit',compact('data'));
     }
 
     /**
@@ -69,7 +103,34 @@ class categoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        
+
+        $validator = Validator::make($data,[
+            'name' => 'required|unique:categories',
+            ]);
+
+        if ($validator->fails()  ) {
+            return redirect()->back()->withInput($data)->withErrors($validator);
+        }  else{
+            DB::beginTransaction();
+
+            try {
+                category::find($id)->update([
+                    'name' => $data['name'],             
+                    ]);        
+                DB::commit();
+                $msg='Đã sửa thành công';
+                return redirect(route('category.index'))->with('status', $msg);
+
+                            // all good
+            } catch (\Exception $e) {
+                \Log::info($e->getMessage());
+                DB::rollback();
+                            // something went wrong
+            }
+            
+        }
     }
 
     /**
@@ -80,6 +141,16 @@ class categoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $des = category::find($id);
+        $data_food = listFood::where('category_id',$id);
+        if ($data_food->count() >0) {
+            $data_food->delete();
+        }
+        $des->delete();
+        $datas = category::orderBy('id', 'desc')->paginate(5);
+        $dataFood = listFood::all();
+
+        return view('category.viewlist',compact('datas','dataFood'))->with('status','Deleted!');
     }
+    
 }

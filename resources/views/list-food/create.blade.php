@@ -16,56 +16,70 @@
 @endsection
 
 @section('content')
-	<form action="{{ route('list-food.store') }}" method="POST" role="form" class="col-md-6" enctype='multipart/form-data'>
-		{{csrf_field()}}
-		<div class="form-group">
-			<label for="">Name</label>
-			<input type="text" class="form-control" name="name" placeholder="Nhập tên món" required>
-		</div>
-		<div class="form-group">
-			<label for="">Image</label>
-			<input type="file" class="form-control"  name="image" placeholder="" onchange="readURL(this)" required>
-			<img src="" style="max-width: 100px;"  alt="" id="img_upload">
-		</div>
-		<div class="form-group">
-			<label for="">Price</label>
-			<input type="number" class="form-control" name="price" placeholder="Nhập giá">
-		</div>
-		<div class="form-group">
-			<label for="">Description</label>
-			<textarea name="description" id="input" class="form-control" rows="3" placeholder="Nhập mô tả"></textarea>
-		</div>
-		<div class="form-group">
-			<label for="">Category</label>
-			<select name="category_id" id="input" class="form-control">
-				@foreach ($datas as $key => $data)
-					<option value="{{$data->id}}">{{$data->name}}</option>
+@if (count($errors) > 0)
+		<div class="alert alert-danger">
+			<strong>Whoops!</strong> There were some problems with your input.<br><br>
+			<ul>
+				@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
 				@endforeach
-			</select>
+			</ul>
 		</div>
-		<div class="form-group">
-			<label for="">Special</label>
-			<select name="special" id="input" class="form-control">
-				<option value="0">Normal</option>
-				<option value="1">Special</option>
-			</select>
-		</div>
+	@endif
+<form action="{{ route('list-food.store') }}" method="POST" role="form" class="col-md-6" enctype='multipart/form-data'>
+	{{csrf_field()}}
 
-		<button type="submit" class="btn btn-primary">Submit</button>
-		<button type="reset" class="btn btn-default">Reset</button>
-	</form>
+
+	<div class="form-group">
+		<label for="">Name</label>
+		<input type="text" class="form-control" name="name" placeholder="Nhập tên món" value="{{old('name')}}" required>
+	</div>
+	<div class="form-group">
+		<label for="">Image</label>
+		<input type="file" class="form-control"  name="image" placeholder="" onchange="readURL(this)" required >
+		<img src="" style="max-width: 100px;"  alt="" id="img_upload">
+	</div>
+	<div class="form-group">
+		<label for="">Price</label>
+		<input type="text" class="form-control" name="price" placeholder="Nhập giá" required  value="{{old('price')}}" >
+	</div>
+	<div class="form-group">
+		<label for="">Description</label>
+		<textarea name="description" id="input" class="form-control" rows="3" placeholder="Nhập mô tả" required> {{old('description')}} </textarea>
+	</div>
+	<div class="form-group">
+		<label for="">Category</label>
+		<select name="category_id" id="input" class="form-control">
+			@foreach ($datas as $key => $data)
+			<option value="{{$data->id}}">{{$data->name}}</option>
+			@endforeach
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="">Special</label>
+		<select name="special" id="input" class="form-control">
+			<option value="0">Normal</option>
+			<option value="1">Special</option>
+		</select>
+	</div>
+
+	<button type="submit" class="btn btn-primary">Submit</button>
+	<button type="reset" class="btn btn-default" style="background: gray">Reset</button>
+	<a href="{{ route('list-food.index') }}" class="btn btn-info">Quay lại</a>
+</form>
+
 @endsection
 
 <script type="text/javascript">
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
 
-            reader.onload = function (e) {
-                $('#img_upload').attr('src', e.target.result);
-            }
+			reader.onload = function (e) {
+				$('#img_upload').attr('src', e.target.result);
+			}
 
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 </script>

@@ -8,7 +8,7 @@ class menuTop extends Model
 {
 	use SoftDeletes;
 	protected $fillable = [
-    		 'name', 'parent_id',
+    		 'name', 'parent_id','slug_name',
     	];
 	protected $dates = ['deleted_at'];
 }

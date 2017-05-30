@@ -16,7 +16,7 @@ class CreateMenuTopsTable extends Migration
         Schema::create('menu_tops', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('parent_id')->comment('0:main,#0:sub');
+            $table->integer('order');
             $table->softDeletes();
             $table->timestamps();
         });

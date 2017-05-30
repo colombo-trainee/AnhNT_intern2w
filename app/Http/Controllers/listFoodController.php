@@ -7,7 +7,8 @@ use App\Models\listFood;
 use Illuminate\Support\Facades\Route;
 use App\Models\category;
 use Illuminate\Support\Facades\Validator as Validator;
-
+use DB;
+use Illuminate\Http\UploadedFile;
 class listFoodController extends Controller
 {
     /**
@@ -17,7 +18,7 @@ class listFoodController extends Controller
      */
     public function index()
     {
-        $datas = listFood::all();
+        $datas = listFood::orderBy('id', 'desc');
         return view('list-food.viewlist',compact('datas'));
     }
 
@@ -31,7 +32,6 @@ class listFoodController extends Controller
         $datas = category::all();
         return view('list-food.create',compact('datas'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -45,10 +45,10 @@ class listFoodController extends Controller
 
         $validator = Validator::make($data,[
 
-                'name' => 'required',
-                'price' => 'required|numeric',
-                'image' => 'required|image',
-
+            'name' => 'required|unique:list_foods',
+            'price' => 'required|numeric',
+            'image' => 'required|image',
+            'description' => 'required',
             ]);
 
         if ($validator->fails()  ) {
@@ -57,45 +57,33 @@ class listFoodController extends Controller
         }  else{
             // rename img
             $time = time();
-            $name_image = $str_lug($data['name']).$time.strstr($request->file('image')->getClientOriginalName(),'.');;
-            $image = $request -> file('image')->storeAs('images/food',$name_image);
+            $name_image = str_slug($data['name']).$time.strstr($request->file('image')->getClientOriginalName(),'.');
+            $image = $request -> file('image')->storeAs('img/food',$name_image);
 
-            $data['image'] = $name_image;
+            $data['image'] = $image;
             
 
             
             DB::beginTransaction();
 
             try {
-                User::create([
+                listFood::create([
                     'name' => $data['name'],
-                    'gender'   => $data['gender'],
-                    'avatar'    => $data['avatar'],
-                    'birthday' => $data['date_birthday'],
-                    'mobile'    => $data['mobile'],
-                    'email'    =>  $data['email'],
-                    'password'  => bcrypt($data['password']),
-                    'address'    => $data['address'],
-                    'facebook'    => $data['facebook'],
-                    'skype'       => $data['skype'],
-                    'work_place' => $data['work_place'],
-                    'education_info' => $data['education_info'],
-                    'skill' => $data['skill'],
-                    'position' => $data['position'],
-                    'note' => $data['note'],
-                    'desire' => $data['desire'],
-                    'type' => $data['type'],
+                    'image'   => $data['image'],
+                    'price'    => $data['price'],
+                    'description' => $data['description'],
+                    'category_id' => $data['category_id'],
+                    'special' => $data['special'],                   
                     ]);        
-                
                 DB::commit();
-                return redirect(route('team.index'));
+                $msg='Đã thêm thành công';
+                return redirect(route('list-food.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {
                 \Log::info($e->getMessage());
                 DB::rollback();
                             // something went wrong
-                            // 
             }
             
         }
@@ -110,7 +98,8 @@ class listFoodController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = listFood::find($id);
+        return view('list-food.show',compact('data'));
     }
 
     /**
@@ -121,7 +110,9 @@ class listFoodController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = listFood::find($id);
+        $datas_cate = category::all();
+        return view('list-food.edit',compact('data','datas_cate'));
     }
 
     /**
@@ -133,8 +124,75 @@ class listFoodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        
+
+        $validator = Validator::make($data,[
+
+            'name' => 'required|unique:list_foods',
+            'price' => 'required|numeric',
+            'description' => 'required',
+            ]);
+
+        if ($validator->fails()  ) {
+            return redirect()->back()->withInput($data)->withErrors($validator);
+
+        }  else{
+
+
+            if ($request->hasFile('image')) {
+            // rename img
+                 $time = time();
+                 $name_image = str_slug($data['name']).$time.strstr($request->file('image')->getClientOriginalName(),'.');
+                 $image = $request -> file('image')->storeAs('img/food',$name_image);
+
+                 $data['image'] = $image;
+                 DB::beginTransaction();
+
+                 try {
+                    listFood::find($id)->update([
+                        'name' => $data['name'],
+                        'price'    => $data['price'],
+                        'image' => $data['image'],
+                        'description' => $data['description'],
+                        'category_id' => $data['category_id'],
+                        'special' => $data['special'],                   
+                        ]);        
+                    DB::commit();
+                    $msg='Đã sửa thành công';
+                    return redirect(route('list-food.index'))->with('status', $msg);
+
+                                        // all good
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                    DB::rollback();
+                                        // something went wrong
+                }      
+            }else{
+                DB::beginTransaction();
+
+                try {
+                    listFood::find($id)->update([
+                        'name' => $data['name'],
+                        'price'    => $data['price'],
+                        'description' => $data['description'],
+                        'category_id' => $data['category_id'],
+                        'special' => $data['special'],                   
+                        ]);        
+                    DB::commit();
+                    $msg='Đã sửa thành công';
+                    return redirect(route('list-food.index'))->with('status', $msg);
+
+                                        // all good
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                    DB::rollback();
+                                        // something went wrong
+                }
+            }
+
     }
+}
 
     /**
      * Remove the specified resource from storage.
@@ -144,6 +202,44 @@ class listFoodController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $des = listFood::find($id);
+        $des->delete();
+        $datas = listFood::orderBy('id', 'desc')->paginate(5);
+
+        return view('list-food.viewlist',compact('datas'))->with('status','Deleted!');
+
     }
+    // public function search_food(Request $request)
+    // {
+    //     $search=  $request->term;
+        
+    //     $datas = listFood::select()->where("name","LIKE","%{$search}%")->get();
+
+    //     // return response()->json($data);
+        
+    //     // return response()->json([
+    //     //          'error' => false,
+    //     //          'data' => $request->term
+    //     //      ],200);
+        
+    //     if(!$datas->isEmpty())
+    //     {
+    //         foreach($datas as $data)
+    //         {
+    //             $new_row['name']= $data->name;
+    //             $new_row['image']= url($data->image);
+    //             $new_row['url']= url('admin/list-food/'.$data->id);
+    //             if ($data->special==1) {
+    //                 $new_row['special'] = '<span class="badge" style="background:  orange;">special</span>';
+    //             }else
+    //             {
+    //                 $new_row['special'] = '<span class="badge">normal</span>';
+    //             }
+
+                
+    //             $row_set[] = $new_row; //build an array
+    //         }
+    //     } 
+    //     echo json_encode($row_set);
+    // }
 }

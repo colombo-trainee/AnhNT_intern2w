@@ -14,60 +14,60 @@ class listFoodsTableSeeder extends Seeder
          listFood::create(
             array(
                 'name'=>'Bimbimbap',
-                'image'=>'ss-about1.png',
+                'image'=>'img/ss-about1.png',
                 'price'=>'3.99',
                 'description'=>'rất ngon',
-                'id_category'=>'1',
+                'category_id'=>'1',
                 'special'=>'0',
             )        
         );
          listFood::create(
             array(
                 'name'=>'Gimbap ',
-                'image'=>'ss-about1.png',
+                'image'=>'img/ss-about1.png',
                 'price'=>'3.99',
                 'description'=>'rất ngon',
-                'id_category'=>'1',
+                'category_id'=>'1',
                 'special'=>'1',
             )        
         );
           listFood::create(
             array(
                 'name'=>'Hobakjuk',
-                'image'=>'ss-about1.png',
+                'image'=>'img/ss-about1.png',
                 'price'=>'3.99',
                 'description'=>'rất ngon',
-                'id_category'=>'1',
+                'category_id'=>'1',
                 'special'=>'0',
             )        
         );
            listFood::create(
             array(
                 'name'=>'Naengmyeon ',
-                'image'=>'ss-about1.png',
+                'image'=>'img/ss-about1.png',
                 'price'=>'3.99',
                 'description'=>'rất ngon',
-                'id_category'=>'2',
+                'category_id'=>'2',
                 'special'=>'0',
             )        
         );
             listFood::create(
             array(
                 'name'=>'Samgyetang ',
-                'image'=>'ss-about1.png',
+                'image'=>'img/ss-about1.png',
                 'price'=>'3.99',
                 'description'=>'rất ngon',
-                'id_category'=>'2',
+                'category_id'=>'2',
                 'special'=>'1',
             )        
         );
         listFood::create(
             array(
                 'name'=>'Soondubu  ',
-                'image'=>'ss-about1.png',
+                'image'=>'img/ss-about1.png',
                 'price'=>'3.99',
                 'description'=>'rất ngon',
-                'id_category'=>'2',
+                'category_id'=>'2',
                 'special'=>'1',
             )        
         );
