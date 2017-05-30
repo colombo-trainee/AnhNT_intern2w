@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>Restaurant</title>
 
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
-	
+	<link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
 	<!-- font -->
 	<link href="https://fonts.googleapis.com/css?family=Gentium+Book+Basic|Lato|Open+Sans|Yeseva+One" rel="stylesheet">
 	<style type="text/css" media="screen">
@@ -155,26 +156,26 @@
 					</div>
 				</div>
 				<div class="reservations-form">
-					<form action="{{route('order-table.store')}}" method="POST" role="form">
+					<form id="order_table" action="" method="POST" role="form">
 						{{csrf_field()}}
 						<div class="form-group rs-form">
 							<label for="">Name</label>
-							<input type="text" class="form-control" name="name" placeholder="your name*" required>
+							<input type="text" id="name" class="form-control" name="name" placeholder="your name*" required>
 							<p class="alert-danger text-center {{ $errors->has('name') ? 'has-error' : '' }}">{{$errors->first('name')}}</p>
 						</div>
 						<div class="form-group rs-form">
 							<label for="">Email</label>
-							<input type="email" class="form-control" name="email" placeholder="your email*" required>
+							<input type="email" id="email" class="form-control" name="email" placeholder="your email*" required>
 							<p class="alert-danger text-center {{ $errors->has('email') ? 'has-error' : '' }}">{{$errors->first('email')}}</p>
 						</div>
 						<div class="form-group rs-form">
 							<label for="">Date</label>
-							<input type="date" class="form-control" name="date" required>
+							<input type="date" id="date" class="form-control" name="date" required>
 							<p class="alert-danger text-center {{ $errors->has('date') ? 'has-error' : '' }}">{{$errors->first('date')}}</p>
 						</div>
 						<div class="form-group rs-form">
 							<label for="">Party number</label>
-							<input type="number" class="form-control" name="partyNumber" placeholder="Party number">
+							<input type="number" id="partyNumber" class="form-control" name="partyNumber" placeholder="Party number">
 							<p class="alert-danger text-center {{ $errors->has('partyNumber') ? 'has-error' : '' }}">{{$errors->first('partyNumber')}}</p>
 						</div>
 
@@ -246,5 +247,54 @@
 	@if (session('status'))
 	<script>$.notify("{{session('status')}}", "success",{ position:"top center" });</script>
 	@endif
+
+	<script src="{{asset('js/jqueryValidate/jquery.validate.js')}}" type="text/javascript"></script>
+	<script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
+	
+<script type="text/javascript">
+$('#order_table').on('submit',function(e){
+
+      e.preventDefault();
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+      // var tuition_policy =tinymce.get('tuition_policy').getContent();
+      var url = "{{route('order-table.store')}}";
+
+      $.ajax({
+          type:'POST',
+          url: url,
+          data: {
+            name : $("#name").val(),
+            email : $("#email").val(),
+            date : $("#date").val(),
+            partyNumber : $("#partyNumber").val(),
+
+          },
+
+          success:function(dataE){
+              if(!dataE.error) {
+                  toastr.success('Đặt bàn thành công !, Xin cảm ơn quý khách');
+
+                  
+
+                  $('#frmCreateUser button[type="submit"]').prop('disabled',true);
+                  
+
+              } else {
+                  toastr.error('Đặt bàn thất bại!, Vui lòng kiểm tra lại thông tin');
+                  $('#order_table button[type="submit"]').prop('disabled',false);
+              }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              toastr.error(thrownError);
+
+            }
+      });
+  });  
+  
+</script>
 </body>
 </html>

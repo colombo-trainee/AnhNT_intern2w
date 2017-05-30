@@ -37,16 +37,16 @@ class orderTableController extends Controller
      */
     public function store(Request $request)
     {
-        $dataE = $request->all();
-        
-
-        $validator = Validator::make($dataE,[
+        if ($request->ajax()) {
+            $dataE = $request->all();
+            $validator = Validator::make($dataE,[
 
             'name' => 'required',
             'email' => 'required|email',
             'date' => 'required|after:today',
             'partyNumber' => 'required|numeric',
-            ],[
+            ],
+            $msg = [
                 'name.required' => 'Không được để trống',
                 'email.required'=>'Không được để trống',
                 'email.email'=>'Không đúng định dạng email',
@@ -56,32 +56,90 @@ class orderTableController extends Controller
                 'partyNumber.numeric'=>'Đây không phải phonenumber',
 
             ]);
-                
-        if ($validator->fails()  ) {
-            return redirect('home')->withInput($dataE)->withErrors($validator)->with('fail','Có lỗi trong đặt bàn');
+            if ($validator->fails()  ){
+                return response()->json([
+                        'error'      => true,
+                        'message'   =>$validator->errors($msg),
+                        'dataE'    => $dataE
+                    ],200);
+            }else{
+                DB::beginTransaction();
 
-        }  else{
-            
-            DB::beginTransaction();
-
-            try {
-                orderTable::create([
-                    'name' => $dataE['name'],
-                    'email'   => $dataE['email'],
-                    'date'    => $dataE['date'],
-                    'partyNumber' => $dataE['partyNumber'],                
-                    ]);
-                DB::commit();
-                $msg='Đã đặt bàn thành công';
-                return redirect()->back()->with('status', $msg);
-                            // all good
-            } catch (\Exception $e) {
-                \Log::info($e->getMessage());
-                DB::rollback();
-                            // something went wrong
+                try {
+                    orderTable::create([
+                        'name' => $dataE['name'],
+                        'email'   => $dataE['email'],
+                        'date'    => $dataE['date'],
+                        'partyNumber' => $dataE['partyNumber'],                
+                        ]);
+                    DB::commit();
+                    return response()->json([
+                        'error'      => false,
+                        'dataE'    => $dataE
+                    ],200);
+                                // all good
+                } catch (\Exception $e) {
+                    \Log::info($e->getMessage());
+                    DB::rollback();
+                                // something went wrong
+                }
             }
-            
+
+
+
         }
+
+
+
+
+
+
+
+
+
+        // $dataE = $request->all();
+        // $validator = Validator::make($dataE,[
+
+        //     'name' => 'required',
+        //     'email' => 'required|email',
+        //     'date' => 'required|after:today',
+        //     'partyNumber' => 'required|numeric',
+        //     ],[
+        //         'name.required' => 'Không được để trống',
+        //         'email.required'=>'Không được để trống',
+        //         'email.email'=>'Không đúng định dạng email',
+        //         'date.required'=>'Không được để trống',
+        //         'date.after'=>'Không được đặt lịch trong quá khứ',
+        //         'partyNumber.required'=>'Không được để trống',
+        //         'partyNumber.numeric'=>'Đây không phải phonenumber',
+
+        //     ]);
+                
+        // if ($validator->fails()  ) {
+        //     return redirect('home')->withInput($dataE)->withErrors($validator)->with('fail','Có lỗi trong đặt bàn');
+
+        // }  else{
+            
+        //     DB::beginTransaction();
+
+        //     try {
+        //         orderTable::create([
+        //             'name' => $dataE['name'],
+        //             'email'   => $dataE['email'],
+        //             'date'    => $dataE['date'],
+        //             'partyNumber' => $dataE['partyNumber'],                
+        //             ]);
+        //         DB::commit();
+        //         $msg='Đã đặt bàn thành công';
+        //         return redirect()->back()->with('status', $msg);
+        //                     // all good
+        //     } catch (\Exception $e) {
+        //         \Log::info($e->getMessage());
+        //         DB::rollback();
+        //                     // something went wrong
+        //     }
+            
+        // }
     }
 
     /**
