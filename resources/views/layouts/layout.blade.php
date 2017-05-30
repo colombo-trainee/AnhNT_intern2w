@@ -18,6 +18,8 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
   folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('css_layout/skins/_all-skins.min.css') }}">
+    {{-- Toastr --}}
+  <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
   <!-- jQuery 3.1.1 -->
   <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/notify.js') }}"></script> 
@@ -479,8 +481,9 @@
   <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
-
-
+{{-- Toastr --}}
+<script src="{{asset('js/jqueryValidate/jquery.validate.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <!-- SlimScroll -->

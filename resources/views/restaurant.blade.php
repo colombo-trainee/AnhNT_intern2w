@@ -161,25 +161,25 @@
 						<div class="form-group rs-form">
 							<label for="">Name</label>
 							<input type="text" id="name" class="form-control" name="name" placeholder="your name*" required>
-							<p class="alert-danger text-center {{ $errors->has('name') ? 'has-error' : '' }}">{{$errors->first('name')}}</p>
+							<p class="alert-danger text-center name"></p>
 						</div>
 						<div class="form-group rs-form">
 							<label for="">Email</label>
 							<input type="email" id="email" class="form-control" name="email" placeholder="your email*" required>
-							<p class="alert-danger text-center {{ $errors->has('email') ? 'has-error' : '' }}">{{$errors->first('email')}}</p>
+							<p class="alert-danger text-center email"></p>
 						</div>
 						<div class="form-group rs-form">
 							<label for="">Date</label>
 							<input type="date" id="date" class="form-control" name="date" required>
-							<p class="alert-danger text-center {{ $errors->has('date') ? 'has-error' : '' }}">{{$errors->first('date')}}</p>
+							<p class="alert-danger text-center date "></p>
 						</div>
 						<div class="form-group rs-form">
 							<label for="">Party number</label>
-							<input type="number" id="partyNumber" class="form-control" name="partyNumber" placeholder="Party number">
-							<p class="alert-danger text-center {{ $errors->has('partyNumber') ? 'has-error' : '' }}">{{$errors->first('partyNumber')}}</p>
+							<input type="number" id="partyNumber" min="1" max="1000" class="form-control" name="partyNumber" placeholder="Party number">
+							<p class="alert-danger text-center partyNumber"></p>
 						</div>
 
-						<button type="submit" class="btn btn-orange" style="display: block;margin: 0 auto;">Book now!</button>
+						<button type="submit" class="btn btn-orange" id="submit" style="display: block;margin: 0 auto;">Book now!</button>
 					</form>
 				</div>
 			</div>
@@ -248,8 +248,10 @@
 	<script>$.notify("{{session('status')}}", "success",{ position:"top center" });</script>
 	@endif
 
-	<script src="{{asset('js/jqueryValidate/jquery.validate.js')}}" type="text/javascript"></script>
-	<script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
+	{{-- Toastr --}}
+<script src="{{asset('js/jqueryValidate/jquery.validate.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
+	
 	
 <script type="text/javascript">
 $('#order_table').on('submit',function(e){
@@ -277,19 +279,41 @@ $('#order_table').on('submit',function(e){
           success:function(dataE){
               if(!dataE.error) {
                   toastr.success('Đặt bàn thành công !, Xin cảm ơn quý khách');
-
-                  
-
-                  $('#frmCreateUser button[type="submit"]').prop('disabled',true);
-                  
+                  $('#submit').prop('disabled',true);
+                  $('.date').removeClass('has-error');
+                  $('.name').removeClass('has-error');
+                  $('.email').removeClass('has-error');
+                  $('.partyNumber').removeClass('has-error');
 
               } else {
                   toastr.error('Đặt bàn thất bại!, Vui lòng kiểm tra lại thông tin');
-                  $('#order_table button[type="submit"]').prop('disabled',false);
+                  $('#submit').prop('disabled',false);
+                  if (dataE.message.date[0]!= "null") {
+                  	 $('.date').addClass('has-error').text(dataE.message.date[0]);
+                  }else{
+                  	$('.date').removeClass('has-error');
+                  }
+                  if (dataE.message.name[0]!= "null") {
+                  	 $('.name').addClass('has-error').text(dataE.message.name[0]);
+                  }else{
+                  	$('.name').removeClass('has-error');
+                  }
+                  if (dataE.message.email[0]!= "null") {
+                  	 $('.email').addClass('has-error').text(dataE.message.email[0]);
+                  }else{
+                  	$('.email').removeClass('has-error');
+                  }
+                  if (dataE.message.partyNumber[0]!= "null") {
+                  	 $('.partyNumber').addClass('has-error').text(dataE.message.partyNumber[0]);
+                  }else{
+                  	$('.partyNumber').removeClass('has-error');
+                  }
+                 
               }
             },
             error: function (xhr, ajaxOptions, thrownError) {
               toastr.error(thrownError);
+              
 
             }
       });

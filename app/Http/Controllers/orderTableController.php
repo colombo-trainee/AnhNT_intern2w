@@ -44,7 +44,7 @@ class orderTableController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'date' => 'required|after:today',
-            'partyNumber' => 'required|numeric',
+            'partyNumber' => 'required|numeric|between:1,1000',
             ],
             $msg = [
                 'name.required' => 'Không được để trống',
@@ -53,14 +53,15 @@ class orderTableController extends Controller
                 'date.required'=>'Không được để trống',
                 'date.after'=>'Không được đặt lịch trong quá khứ',
                 'partyNumber.required'=>'Không được để trống',
-                'partyNumber.numeric'=>'Đây không phải phonenumber',
+                'partyNumber.numeric'=>'Đây không phải dạng số',
+                'partyNumber.between'=>'Số người không quá 1000',
 
             ]);
             if ($validator->fails()  ){
                 return response()->json([
                         'error'      => true,
                         'message'   =>$validator->errors($msg),
-                        'dataE'    => $dataE
+                        'dataE'    => $dataE,
                     ],200);
             }else{
                 DB::beginTransaction();
