@@ -18,7 +18,7 @@ class listFoodController extends Controller
      */
     public function index()
     {
-        $datas = listFood::orderBy('id', 'desc');
+        $datas = listFood::orderBy('id', 'desc')->get();
         return view('list-food.viewlist',compact('datas'));
     }
 
@@ -49,6 +49,14 @@ class listFoodController extends Controller
             'price' => 'required|numeric',
             'image' => 'required|image',
             'description' => 'required',
+            ],$msg=[
+                'name.required'=> 'Không được để trống',
+                'name.unique'=> 'Đã có món này rồi',
+                'price.required'=> 'Không được để trống',
+                'price.numeric'=> 'Không phải định dạng số',
+                'image.required'=> 'Không được để trống',
+                'image.image'=> 'Không phải định dạng ảnh',
+                'description.required'=> 'Không được để trống',
             ]);
 
         if ($validator->fails()  ) {
@@ -129,7 +137,7 @@ class listFoodController extends Controller
 
         $validator = Validator::make($data,[
 
-            'name' => 'required|unique:list_foods',
+            'name' => 'required',
             'price' => 'required|numeric',
             'description' => 'required',
             ]);

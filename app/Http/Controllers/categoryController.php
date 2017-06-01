@@ -147,10 +147,9 @@ class categoryController extends Controller
             $data_food->delete();
         }
         $des->delete();
-        $datas = category::orderBy('id', 'desc')->paginate(5);
-        $dataFood = listFood::all();
-
-        return view('category.viewlist',compact('datas','dataFood'))->with('status','Deleted!');
+        
+         return response()->json(['error' => false]);
+            
     }
     
 }

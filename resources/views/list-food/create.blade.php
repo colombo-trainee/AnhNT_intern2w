@@ -21,7 +21,7 @@
 			<strong>Whoops!</strong> There were some problems with your input.<br><br>
 			<ul>
 				@foreach ($errors->all() as $error)
-					<li>{{ $error }}</li>
+					<li>{{ $error }}x</li>
 				@endforeach
 			</ul>
 		</div>
@@ -63,7 +63,7 @@
 		</select>
 	</div>
 
-	<button type="submit" class="btn btn-primary">Submit</button>
+	<button type="submit" class="btn btn-primary">Save</button>
 	<button type="reset" class="btn btn-default" style="background: gray">Reset</button>
 	<a href="{{ route('list-food.index') }}" class="btn btn-info">Quay lại</a>
 </form>

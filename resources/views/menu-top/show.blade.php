@@ -21,5 +21,38 @@
 </ol>
 @endsection
 @section('content')
-	
+<div class="row">
+<table style="margin-left:1%;" class="col-md-4">
+		<thead> 
+			<tr>
+				<th>Name : </th>
+				<td>{{$menu->name}}</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th>Order : </th>
+				<td>{{$menu->order}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<br>
+
+<table class="table table-hover" border="1px" width="98%">
+	<thead>
+		<tr>
+			<th>Home</th>
+			@foreach ($data_all as $data)
+			@if ($data->id == $menu->id)
+			<th style="background: red">{{$data->name}}</th>
+			@else
+			<th>{{$data->name}}</th>
+			@endif
+			@endforeach
+
+		</tr>
+	</thead>
+</table>
+<a href="{{ route('menu-top.index') }}" class="btn btn-info">Quay lại</a>
 @endsection

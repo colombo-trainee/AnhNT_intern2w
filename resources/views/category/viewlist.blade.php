@@ -19,17 +19,16 @@
 		
 	</div>
 	<div class="col-md-6">
-        <form method="GET" action="">
-            {{csrf_field()}}
-            <input id="search" type="text" class="search-class form-control typeahead" name="search"  placeholder="Nhập Thông Tin Tìm Kiếm">
-        </form>
-    </div>
+		<form method="GET" action="">
+			{{csrf_field()}}
+			<input id="search" type="text" class="search-class form-control typeahead" name="search"  placeholder="Nhập Thông Tin Tìm Kiếm">
+		</form>
+	</div>
 </div>
 
 
 <div class="row">
-	<div class="col-md-12 table">
-		<table class="table table-bordered table-hover" id="table">
+	<table id="example" class="display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>STT</th>
@@ -99,54 +98,33 @@
 					success: function(res)
 					{
 						if(!res.error) {
-							$msg = "After 1 second will delete ";
-							$.notify($msg, "error");
-                	
-                    setTimeout(function () {
-                    	location.reload();
-                    }, 1000)                   
-                }
-            },
-              
-          });
+							toastr.success('Xóa thành công!');
+							setTimeout(function () {
+								location.reload();
+							}, 1000)                   
+						}
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						toastr.error(thrownError);
+					}
+				});
 
 
 			} else {
-
-				$msg = "Cancelled";
-				$.notify($msg, "success");
-        
-        }
-    });
-	}   
+				toastr.error("Thao tác xóa đã bị huỷ bỏ!");
+			}
+		});
+	}    
 </script>
-<script src="{{asset('js/jquery-ui.min.js')}}" type="text/javascript"></script>
-<link rel="stylesheet" href="{{asset('css/jquery-ui.min.css')}}">
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.table').DataTable();
 	} );
 </script>
-
-{{-- <script type="text/javascript">
-	$(document).ready(function(){
-		$("#search").autocomplete({
-			source: "{{ route('search_food') }}",
-			focus: function( event, ui ) {
-            //$( "#search" ).val( ui.item.title ); // uncomment this line if you want to select value to search box  
-            return false;
-        },
-        select: function( event, ui ) {
-        	window.location.href = ui.item.url;
-        }
-    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-			var inner_html = '<a href="' + item.url + '" ><div class="list_item_container"><div class="image1"><img src="' + item.image + '" ></div><div class="label1"><h4><b>' + item.name + '</b></h4>'+item.special+'</div></div></a>';
-			return $( "<li></li>" )
-			.data( "item.autocomplete", item )
-			.append(inner_html)
-			.appendTo( ul );
-		};
-	});
-</script> --}}
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#example').DataTable();
+	} );
+</script>	
 @endsection
 

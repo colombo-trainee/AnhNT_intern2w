@@ -23,8 +23,6 @@
 		}
 		.has-error{
 			display: block;
-			
-
 		}
 	</style>
 	<script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
@@ -46,7 +44,7 @@
 						<ul>
 							<li><a href="#" id="home">Home</a></li>
 							@foreach ($datasMenuT as $menuT)
-								<li><a href="#" id="{{ $menuT->slug_name }}">{{ $menuT->name }}</a></li>
+							<li><a href="#" id="{{ $menuT->slug_name }}">{{ $menuT->name }}</a></li>
 							@endforeach
 							<li class="social">
 								<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
@@ -104,23 +102,26 @@
 	<!-- /ingredients -->
 	<div class="container">
 		<section class="menu row grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 50% }'>
-		@foreach ($datasMenuF as $dataF)
+			@foreach ($datasCate as $dataCate)
 			<div class="col-md-6 grid-item">
 				<div class="menu-title text-center">
-					<p>{{$dataF->category->name}}</p>
+					<p>{{$dataCate->name}}</p>
 					<img src="img/ss-content-hr.png" alt="">
 				</div>
-				<div class="menu-sub {{$dataF->special == 1 ? 'menu-special' : ''}}">
-					<div class="titleNprice">
-						<p class="title pull-left">
-							{{$dataF->name}}
-						</p>
-						<p class="price pull-right">{{$dataF->price}}</p>
+				@foreach ($datasMenuF as $dataF)
+					@if ($dataCate->id == $dataF->category_id)
+					<div class="menu-sub {{$dataF->special == 1 ? 'menu-special' : ''}}">
+						<div class="titleNprice">
+							<p class="title pull-left">
+								{{$dataF->name}}
+							</p>
+							<p class="price pull-right">${{$dataF->price}}</p>
+						</div>
+						<div class="description">{{$dataF->description}}</div>
 					</div>
-					<div class="description">{{$dataF->description}}</div>
-				</div>
-
-
+				@endif
+				@endforeach
+				
 			</div>
 			@endforeach
 		</section>
@@ -175,7 +176,7 @@
 						</div>
 						<div class="form-group rs-form">
 							<label for="">Party number</label>
-							<input type="number" id="partyNumber" min="1" max="1000" class="form-control" name="partyNumber" placeholder="Party number">
+							<input type="number" id="partyNumber" min="1" max="20" class="form-control" name="partyNumber" placeholder="How many people?">
 							<p class="alert-danger text-center partyNumber"></p>
 						</div>
 
@@ -249,76 +250,76 @@
 	@endif
 
 	{{-- Toastr --}}
-<script src="{{asset('js/jqueryValidate/jquery.validate.js')}}" type="text/javascript"></script>
-<script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
+	<script src="{{asset('js/jqueryValidate/jquery.validate.js')}}" type="text/javascript"></script>
+	<script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
 	
 	
-<script type="text/javascript">
-$('#order_table').on('submit',function(e){
+	<script type="text/javascript">
+		$('#order_table').on('submit',function(e){
 
-      e.preventDefault();
-      $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-      });
+			e.preventDefault();
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
       // var tuition_policy =tinymce.get('tuition_policy').getContent();
       var url = "{{route('order-table.store')}}";
 
       $.ajax({
-          type:'POST',
-          url: url,
-          data: {
-            name : $("#name").val(),
-            email : $("#email").val(),
-            date : $("#date").val(),
-            partyNumber : $("#partyNumber").val(),
+      	type:'POST',
+      	url: url,
+      	data: {
+      		name : $("#name").val(),
+      		email : $("#email").val(),
+      		date : $("#date").val(),
+      		partyNumber : $("#partyNumber").val(),
 
-          },
+      	},
 
-          success:function(dataE){
-              if(!dataE.error) {
-                  toastr.success('Đặt bàn thành công !, Xin cảm ơn quý khách');
-                  $('#submit').prop('disabled',true);
-                  $('.date').removeClass('has-error');
-                  $('.name').removeClass('has-error');
-                  $('.email').removeClass('has-error');
-                  $('.partyNumber').removeClass('has-error');
+      	success:function(dataE){
+      		if(!dataE.error) {
+      			toastr.success('Đặt bàn thành công !, Xin cảm ơn quý khách');
+      			$('#submit').prop('disabled',true);
+      			$('.date').removeClass('has-error');
+      			$('.name').removeClass('has-error');
+      			$('.email').removeClass('has-error');
+      			$('.partyNumber').removeClass('has-error');
 
-              } else {
-                  toastr.error('Đặt bàn thất bại!, Vui lòng kiểm tra lại thông tin');
-                  $('#submit').prop('disabled',false);
-                  if (dataE.message.date[0]!= "null") {
-                  	 $('.date').addClass('has-error').text(dataE.message.date[0]);
-                  }else{
-                  	$('.date').removeClass('has-error');
-                  }
-                  if (dataE.message.name[0]!= "null") {
-                  	 $('.name').addClass('has-error').text(dataE.message.name[0]);
-                  }else{
-                  	$('.name').removeClass('has-error');
-                  }
-                  if (dataE.message.email[0]!= "null") {
-                  	 $('.email').addClass('has-error').text(dataE.message.email[0]);
-                  }else{
-                  	$('.email').removeClass('has-error');
-                  }
-                  if (dataE.message.partyNumber[0]!= "null") {
-                  	 $('.partyNumber').addClass('has-error').text(dataE.message.partyNumber[0]);
-                  }else{
-                  	$('.partyNumber').removeClass('has-error');
-                  }
-                 
-              }
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-              toastr.error(thrownError);
-              
+      		} else {
+      			toastr.error('Đặt bàn thất bại!, Vui lòng kiểm tra lại thông tin');
+      			$('#submit').prop('disabled',false);
+      			if (dataE.message.date) {
+      				$('.date').addClass('has-error').text(dataE.message.date[0]);
+      			}else{
+      				$('.date').removeClass('has-error');
+      			}
+      			if (dataE.message.name) {
+      				$('.name').addClass('has-error').text(dataE.message.name[0]);
+      			}else{
+      				$('.name').removeClass('has-error');
+      			}
+      			if (dataE.message.email) {
+      				$('.email').addClass('has-error').text(dataE.message.email[0]);
+      			}else{
+      				$('.email').removeClass('has-error');
+      			}
+      			if (dataE.message.partyNumber) {
+      				$('.partyNumber').addClass('has-error').text(dataE.message.partyNumber[0]);
+      			}else{
+      				$('.partyNumber').removeClass('has-error');
+      			}
 
-            }
+      		}
+      	},
+      	error: function (xhr, ajaxOptions, thrownError) {
+      		toastr.error(thrownError);
+
+
+      	}
       });
   });  
-  
+
 </script>
 </body>
 </html>

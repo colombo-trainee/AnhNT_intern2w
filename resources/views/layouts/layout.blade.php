@@ -8,6 +8,7 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="{{ asset('css_layout/bootstrap.min.css') }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -18,13 +19,12 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
   folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ asset('css_layout/skins/_all-skins.min.css') }}">
-    {{-- Toastr --}}
+  {{-- Toastr --}}
   <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
   <!-- jQuery 3.1.1 -->
-  <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('js/notify.js') }}"></script> 
   <link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
   {{-- DataTables --}}
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
   
  {{--  <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
  <script type="text/javascript" src="{{ asset('js/sweetalert.min.js') }}"></script> --}}
@@ -257,7 +257,7 @@
   </aside>
 
   <!-- =============================================== -->
-    <!-- Content Wrapper. Contains page content -->
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="padding-bottom: 30px;overflow: hidden;">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -482,7 +482,8 @@
 </div>
 <!-- ./wrapper -->
 {{-- Toastr --}}
-<script src="{{asset('js/jqueryValidate/jquery.validate.js')}}" type="text/javascript"></script>
+
+<script type="text/javascript" src="{{ asset('js/notify.js') }}"></script>  
 <script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -496,6 +497,17 @@
 <script src="{{ asset('js/js_layout/demo.js') }}"></script>
 <script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
 {{-- DataTables --}}
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+  
+  
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#sortable" ).sortable();
+    $( "#sortable" ).disableSelection();
+  } );
+  </script>
 </body>
 </html>

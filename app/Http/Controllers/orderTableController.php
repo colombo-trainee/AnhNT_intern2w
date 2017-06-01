@@ -15,7 +15,7 @@ class orderTableController extends Controller
      */
     public function index()
     {
-        $datas = orderTable::all();
+        $datas = orderTable::orderBy('id','desc')->get();
         return view('order-table.viewlist',compact('datas'));
     }
 
@@ -26,7 +26,7 @@ class orderTableController extends Controller
      */
     public function create()
     {
-        //
+        return view('order-table.create');
     }
 
     /**
@@ -44,7 +44,7 @@ class orderTableController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'date' => 'required|after:today',
-            'partyNumber' => 'required|numeric|between:1,1000',
+            'partyNumber' => 'numeric|between:1,20',
             ],
             $msg = [
                 'name.required' => 'Không được để trống',
@@ -52,9 +52,8 @@ class orderTableController extends Controller
                 'email.email'=>'Không đúng định dạng email',
                 'date.required'=>'Không được để trống',
                 'date.after'=>'Không được đặt lịch trong quá khứ',
-                'partyNumber.required'=>'Không được để trống',
                 'partyNumber.numeric'=>'Đây không phải dạng số',
-                'partyNumber.between'=>'Số người không quá 1000',
+                'partyNumber.between'=>'Số người không quá 20',
 
             ]);
             if ($validator->fails()  ){
@@ -239,6 +238,7 @@ class orderTableController extends Controller
      */
     public function destroy($id)
     {
-        //
+        orderTable::find($id)->delete();
+        return response()->json(['error' => false]);
     }
 }

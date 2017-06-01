@@ -3,10 +3,13 @@
 	.table{
 		margin: 0 auto;
 	}
+	.has-error{
+		display: block;
+	}
 </style>
 @section('content-header')
 <h1>
-	{{ucfirst( substr( Route::currentRouteName(),10 ))}} Food
+	{{ucfirst( substr( Route::currentRouteName(),10 ))}} list-food
 </h1>
 <ol class="breadcrumb">
 	<li><a href="#"><i class="fa fa-dashboard"></i> Restaurant</a></li>
@@ -69,7 +72,6 @@
 	</div>
 
 	<button type="submit" class="btn btn-primary">Save</button>
-	<button type="reset" class="btn btn-default" style="background: gray">Reset</button>
 	<a href="{{ route('list-food.index') }}" class="btn btn-info">Quay lại</a>
 </form>
 <script type="text/javascript">

@@ -19,7 +19,7 @@ class menuTopController extends Controller
     {
         // $data =  menuTop::all();
         // return view('menu-top.test');
-        $datas = menuTop::all();
+        $datas = menuTop::orderBy('id','desc')->get();
         return view('menu-top.viewlist',compact('datas'));
     }
 
@@ -30,7 +30,8 @@ class menuTopController extends Controller
      */
     public function create()
     {
-        return view('menu-top.create');
+        $datas = menuTop::orderBy('order','asc')->get();
+        return view('menu-top.create',compact('datas'));
     }
 
     /**
@@ -44,22 +45,29 @@ class menuTopController extends Controller
         $data = $request->all();
         
         $validator = Validator::make($data,[
-
-            'parent_id' => 'required',
+            'order' => 'required|numeric',
             'name' => 'required|unique:menu_tops',
+            ],$msg=[
+                'order.required' => 'Không được để trống',
+                'order.numeric' => 'Bắt buộc là số ',
+                'name.required' => 'Không được để trống',
+                'name.unique' => 'Đã có tên menu này',
             ]);
 
         if ($validator->fails()  ) {
-            return redirect()->back()->withInput($data)->withErrors($validator);
-
+            return response()->json([
+                        'error' => true,
+                        'message'   =>$validator->errors($msg),
+                        'data'    => $data,
+                    ],200);
         }  else{
             DB::beginTransaction();
 
             try {
                 menuTop::create([
-                    'parent_id' => $data['parent_id'],
-                    'name'   => $data['name'],
-                    'slug_name'    => str_slug(strtolower($data['name'])),                
+                    'name'   => ucfirst($data['name']),
+                    'slug_name'    => str_slug(strtolower($data['name'])),  
+                    'order' => $data['order'],              
                     ]);        
                 DB::commit();
                 $msg='Đã thêm thành công';
@@ -83,8 +91,9 @@ class menuTopController extends Controller
      */
     public function show($id)
     {
-        $data  = menuTop::find($id);
-        return view('menu-top.show',compact('data'));
+        $menu  = menuTop::find($id);    
+        $data_all = menuTop::orderBy('order','asc')->get();
+        return view('menu-top.show',compact('menu','data_all'));
     }
 
     /**
@@ -95,7 +104,8 @@ class menuTopController extends Controller
      */
     public function edit($id)
     {
-        
+        $data  = menuTop::find($id);
+        return view('menu-top.edit',compact('data'));
     }
 
     /**
@@ -107,7 +117,40 @@ class menuTopController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        
+        $validator = Validator::make($data,[
+            'order' => 'required|numeric',
+            'name' => 'required',
+            ],$msg=[
+                'order.required' => 'Không được để trống',
+                'order.numeric' => 'Bắt buộc là số ',
+                'name.required' => 'Không được để trống',
+            ]);
+
+        if ($validator->fails()  ) {
+             return redirect()->back()->withInput($data)->withErrors($validator);
+        }  else{
+            DB::beginTransaction();
+
+            try {
+                menuTop::find($id)->update([
+                    'name'   => ucfirst($data['name']),
+                    'slug_name'    => str_slug(strtolower($data['name'])),  
+                    'order' => $data['order'],              
+                    ]);        
+                DB::commit();
+                    $msg='Đã sửa thành công';
+                    return redirect(route('menu-top.index'))->with('status', $msg);
+
+                            // all good
+            } catch (\Exception $e) {
+                \Log::info($e->getMessage());
+                DB::rollback();
+                            // something went wrong
+            }
+            
+        }
     }
 
     /**
@@ -118,6 +161,7 @@ class menuTopController extends Controller
      */
     public function destroy($id)
     {
-        //
+        menuTop::find($id)->delete();
+        return response()->json(['error' => false]);
     }
 }
