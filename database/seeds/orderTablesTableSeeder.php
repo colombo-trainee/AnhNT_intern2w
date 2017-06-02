@@ -18,7 +18,7 @@ class orderTablesTableSeeder extends Seeder
 	            $data->name = $faker->name;
 	            $data->email = $faker->email;
 	            $data->date = $faker->date($format = 'Y-m-d', $max = 'now');
-	            $data->partyNumber = $faker->randomNumber($nbDigits = NULL, $strict = false);
+	            $data->partyNumber = $faker->numberBetween($min = 1, $max = 20);
 	            $data->save();
         }
     }

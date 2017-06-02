@@ -24,6 +24,13 @@
 		.has-error{
 			display: block;
 		}
+		.modal th{
+			background-color: #c9a131;
+      		color: white;
+		}
+		.modal{
+			border-radius: 0px;
+		}
 	</style>
 	<script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -119,7 +126,7 @@
 						</div>
 						<div class="description">{{$dataF->description}}</div>
 					</div>
-				@endif
+					@endif
 				@endforeach
 				
 			</div>
@@ -182,6 +189,49 @@
 
 						<button type="submit" class="btn btn-orange" id="submit" style="display: block;margin: 0 auto;">Book now!</button>
 					</form>
+					<div class="modal fade in" id="myModal" role="dialog">
+						    <div class="modal-dialog">
+						    
+						      <!-- Modal content-->
+						      <div class="modal-content">
+						        <div class="modal-header">
+						          <button type="button" class="close btn btn-danger" data-dismiss="modal" style="background: red;">Close</button>
+						          <h1 class="modal-title title_reservations">Confirm</h1>
+						        </div>
+						        <div class="modal-body">
+						          	<table class="table table-striped table-bordered table-hover table-checkable">
+								         <thead>
+								            <tr>
+								               <th class="stl-column color-column col-sm-3"><label>Tiêu đề</label></th>
+								               <th class="stl-column color-column"><label>Nội dung</label></th> 
+								            </tr>
+								         </thead>
+								         <tbody>
+								            <tr>
+								               <th><label>Tên khách hàng</label></th>
+								               <td class="al_name"></td>
+								            </tr>
+								            <tr>
+								               <th><label>Email</label></th>
+								               <td class="al_email"></td>
+								            </tr>
+								            <tr>
+								               <th><label>Ngày đặt</label></th>
+								               <td class="al_date"></td>
+								            </tr>
+								            <tr>
+								               <th><label>Số người</label></th>
+								               <td class="al_partyNumber"></td>
+								            </tr>
+								         </tbody>
+							     	</table>
+						        </div>
+						        <div class="modal-footer">
+						          <h2 class="text-center">Welcome !</h2>
+						        </div>
+						      </div>
+						      
+    						</div>
 				</div>
 			</div>
 		</section>
@@ -255,8 +305,15 @@
 	
 	
 	<script type="text/javascript">
-		$('#order_table').on('submit',function(e){
-
+		$('.close').click(function() {
+			$('.modal').hide();
+			
+		});
+	$('#order_table').on('submit',function(e){
+			$('.al_name').text($("#name").val());
+			$('.al_email').text($("#email").val());
+			$('.al_date').text($("#date").val());
+			$('.al_partyNumber').text($("#partyNumber").val());
 			e.preventDefault();
 			$.ajaxSetup({
 				headers: {
@@ -285,6 +342,7 @@
       			$('.name').removeClass('has-error');
       			$('.email').removeClass('has-error');
       			$('.partyNumber').removeClass('has-error');
+      			$('.modal').show();
 
       		} else {
       			toastr.error('Đặt bàn thất bại!, Vui lòng kiểm tra lại thông tin');
@@ -314,8 +372,6 @@
       	},
       	error: function (xhr, ajaxOptions, thrownError) {
       		toastr.error(thrownError);
-
-
       	}
       });
   });  

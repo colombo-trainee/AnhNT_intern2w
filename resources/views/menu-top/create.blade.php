@@ -17,7 +17,7 @@
   <li class="active">{{ucfirst( substr( Route::currentRouteName(),9 ))}}</li>
 </ol>
 @endsection
-{{-- @section('content')
+ @section('content')
 <form action="{{ route('menu-top.store') }}" method="POST" role="form" class="col-md-6 col-md-offset-3" id="menu-top"> 
     {{csrf_field()}}
     <div class="form-group">
@@ -31,80 +31,15 @@
         <p class="alert alert-danger order"></p>
     </div>
     
-
-    
     <button type="submit" class="btn btn-primary ">Submit</button>
 </form>
---}}
-
-@section('content')
-{{-- CSS JQ --}}
-<style>
-  .menu-li{
-    list-style: none;
-    float: left;
-    padding: 5px;
-    background: #333;
-    font-size: 20px;
-    color: white;
-    border: 1px solid gray;
-    margin: 5px;
-    cursor: pointer;
-  }
-</style>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-  $( function() {
-    $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
-  } );
-</script>
-{{-- content sap xep menu --}}
-<div class="row">
-  <ul id="sortable">
-    @foreach ($datas as $data)
-    <li class="menu-li">{{$data->name}}</li>
-    @endforeach
-  </ul>
-  <span class="ib"></span>
-</div>
-{{-- form add --}}
-<div class="row">
-  <form action="{{ route('menu-top.store') }}" method="POST" role="form" class="col-md-6" id="menu-top">
-
-    <div class="form-group">
-      <label for="">Name</label>
-      <input type="text" class="form-control"  name="name" placeholder="Nhập tên menu" id="menuLast">
-      <input type="button" value="Tạo menu test" id="test">
-      <span class="msg alert-info" style="font-size: 14px;"></span>
-      <p class="alert-danger name"></p>
-      <p class="alert-danger order"></p>
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-  </form>
-</div>
-
-
 
 <script>
-  $(document.body).on('click','#test',function() {
-    if ($('#menuLast').val().length > 0 ) {
-      $('#test').prop('disabled',true);
-      $('#test').hide();
-      $('.msg').text('Kéo menu màu đỏ vừa tạo vào vị trí cần').css('padding', '5px');;
-      var menuLast = $('#menuLast').val();
-      $('#sortable').append('<li class="menu-li last" style="background:red;">'+menuLast+'</li>');
-      
-    }
-  });
-</script>
+jQuery.noConflict();
+(function( $ ) {
 
-
-  {{-- ajax --}}
-<script type="text/javascript">
-$('#menu-top').on('submit',function(e){
-      var order = $('.last').index();
+  $('#menu-top').on('submit',function(e){
+     
       e.preventDefault();
       $.ajaxSetup({
           headers: {
@@ -118,17 +53,18 @@ $('#menu-top').on('submit',function(e){
           url: url,
           data: {
             name : $('.last').text(),
-            order : order,
+            order : $('#order').val(),
 
           },
 
           success:function(data){
               if(!data.error) {
                   toastr.success('Thêm mới thành công !');
+                  
                   $('.name').removeClass('has-error');
                   $('.order').removeClass('has-error');
                   setTimeout(function(){
-                    location.href = '/admin/menu-top/ ';
+                    location.href = '/admin/menu-top/';
                   },1000)
               } else {
                   toastr.error('Thêm mới thất bại!');
@@ -144,6 +80,7 @@ $('#menu-top').on('submit',function(e){
                   }
                   
               }
+              
             },
             error: function (xhr, ajaxOptions, thrownError) {
               toastr.error(thrownError);
@@ -152,6 +89,6 @@ $('#menu-top').on('submit',function(e){
             }
       });
   });  
-  
-</script> 
+})(jQuery);
+</script>
 @endsection

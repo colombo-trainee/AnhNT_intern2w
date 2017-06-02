@@ -18,12 +18,6 @@
 		</div>
 		
 	</div>
-	<div class="col-md-6">
-		<form method="GET" action="">
-			{{csrf_field()}}
-			<input id="search" type="text" class="search-class form-control typeahead" name="search"  placeholder="Nhập Thông Tin Tìm Kiếm">
-		</form>
-	</div>
 </div>
 
 
@@ -116,15 +110,5 @@
 		});
 	}    
 </script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('.table').DataTable();
-	} );
-</script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#example').DataTable();
-	} );
-</script>	
 @endsection
 

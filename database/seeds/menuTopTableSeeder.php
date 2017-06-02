@@ -14,38 +14,37 @@ class menuTopTableSeeder extends Seeder
     {
         menuTop::create(
             array(
-                'name'=>'Home',
-                'parent_id'=>'0',
-            )        
-        );
-        menuTop::create(
-            array(
                 'name'=>'About',
-                'parent_id'=>'0',
+                'order'=>'1',
+                'slug_name'=>'about',
             )        
         );
         menuTop::create(
             array(
                 'name'=>'Igredients',
-                'parent_id'=>'0',
+                'order'=>'2',
+                 'slug_name'=>'igredients',
             )        
         );
         menuTop::create(
             array(
                 'name'=>'Menu',
-                'parent_id'=>'0',
+                'order'=>'3',
+                 'slug_name'=>'menu',
             )        
         );
         menuTop::create(
             array(
                 'name'=>'Reviews',
-                'parent_id'=>'0',
+                'order'=>'4',
+                 'slug_name'=>'reviews',
             )        
         );
         menuTop::create(
             array(
                 'name'=>'Reservations',
-                'parent_id'=>'0',
+                'order'=>'5',
+                 'slug_name'=>'reservations',
             )        
         );
     }

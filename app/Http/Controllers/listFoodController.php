@@ -15,7 +15,12 @@ class listFoodController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+    
      */
+    public function __construct()
+    {
+        $this->middleware("auth");
+    }
     public function index()
     {
         $datas = listFood::orderBy('id', 'desc')->get();
@@ -217,37 +222,9 @@ class listFoodController extends Controller
         return view('list-food.viewlist',compact('datas'))->with('status','Deleted!');
 
     }
-    // public function search_food(Request $request)
+    // public function index_admin()
     // {
-    //     $search=  $request->term;
-        
-    //     $datas = listFood::select()->where("name","LIKE","%{$search}%")->get();
-
-    //     // return response()->json($data);
-        
-    //     // return response()->json([
-    //     //          'error' => false,
-    //     //          'data' => $request->term
-    //     //      ],200);
-        
-    //     if(!$datas->isEmpty())
-    //     {
-    //         foreach($datas as $data)
-    //         {
-    //             $new_row['name']= $data->name;
-    //             $new_row['image']= url($data->image);
-    //             $new_row['url']= url('admin/list-food/'.$data->id);
-    //             if ($data->special==1) {
-    //                 $new_row['special'] = '<span class="badge" style="background:  orange;">special</span>';
-    //             }else
-    //             {
-    //                 $new_row['special'] = '<span class="badge">normal</span>';
-    //             }
-
-                
-    //             $row_set[] = $new_row; //build an array
-    //         }
-    //     } 
-    //     echo json_encode($row_set);
+    //     return view('admin-index');
     // }
+    
 }

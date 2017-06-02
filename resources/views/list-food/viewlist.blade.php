@@ -26,7 +26,7 @@
 
 
 <div class="row">
-	<table id="example" class="display" cellspacing="0" width="100%">
+	<table id="example" class="display table-bordered table-striped table table-hover" cellspacing="0" width="100%" >
 		<thead>
 			<tr>
 				<th>STT</th>
@@ -39,24 +39,12 @@
 				<th>Action</th>
 			</tr>
 		</thead>
-		<tfoot>
-			<tr>
-				<th>STT</th>
-				<th>Name</th>
-				<th>Image</th>
-				<th>Price</th>
-				<th>Description</th>
-				<th>Category</th>
-				<th>Special</th>
-				<th>Action</th>
-			</tr>
-		</tfoot>
 		<tbody>
 			@foreach($datas as $key => $data)
 			<tr>
 				<td>{{$key+1}}</td>
 				<td>{{$data->name}}</td>
-				<td><img src="{{ asset($data->image) }}" alt="" style="width: 100px;"></td>
+				<td><img src="{{ asset($data->image) }}" alt="" style="width: 100px;height: 75px;"></td>
 				<td>${{$data->price}}</td>
 				<td width="250px">
 					@if (strlen($data->description)>30)
@@ -74,15 +62,6 @@
 					@endif
 
 				</td>
-					{{-- <td  class="text-center">
-						<a href="{{ route('list-food.show',$data->id) }}" class="btn btn-success">View</a>
-						<a href="{{ route('list-food.edit',$data->id) }}" class="btn btn-info">Edit</a>
-						<form action="{{ route('list-food.destroy',$data->id) }}" method="post" accept-charset="utf-8" style="display: inline;">
-							{{csrf_field()}}
-							{{method_field('DELETE')}}
-							<button type="submit" class="btn btn-danger" onclick="alertDel({{$data->id}})">Delete</button>
-						</form>
-					</td> --}}
 					<td class="text-center"> 
 						<a href="{{ route('list-food.show',$data->id) }}" class="btn btn-success">
 							<i class="fa fa-eye" aria-hidden="true"></i> Detail 
@@ -148,13 +127,10 @@
     });
  }   
 </script>
-
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#example').DataTable();
 	} );
 </script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 @endsection
 

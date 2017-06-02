@@ -34,14 +34,6 @@
 				<th>Action</th>
 			</tr>
 		</thead>
-		<tfoot>
-			<tr>
-				<th>STT</th>
-				<th>Name</th>
-				<th>Parent ID</th>
-				<th>Action</th>
-			</tr>
-		</tfoot>
 		<tbody>
 			@foreach($datas as $key => $data)
 			<tr>
@@ -51,8 +43,8 @@
 					{{$data->order}}
 				</td>
 				<td>
-					<a href="{{ route('menu-top.show',$data->id) }}" class="btn btn-success">View</a>
-					<a href="{{ route('menu-top.edit',$data->id) }}" class="btn btn-info">Edit</a>
+					<a href="{{ route('menu-top.show',$data->id) }}" class="btn btn-success"><i class="fa fa-eye" aria-hidden="true"></i>View</a>
+					<a href="{{ route('menu-top.edit',$data->id) }}" class="btn btn-info"><i class="fa fa-edit"></i>Edit</a>
 					<a href="javascript:;" type="submit" onclick="alertDel({{$data->id}})" class="btn btn-danger">
 						<i class="fa fa-trash-o"></i> Delete 
 					</a>
@@ -65,17 +57,12 @@
 @if (session('status'))
 <script>$.notify("{{session('status')}}", "success");</script></div>
 @endif
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#example').DataTable();
-	} );
-</script>
+
 
 <script>
  function alertDel(id){
 
-  var path = "{{URL::asset('')}}admin/menu-top/" + id;
-
+  var path = "{{URL::asset('')}}admin/menu-top/" + id;	
     swal({
         title: "Bạn có chắc muốn xóa?",
         type: "warning",
@@ -86,13 +73,12 @@
     },
     function(isConfirm) {
         if (isConfirm) {  
-
+        	
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         $.ajax({
               type: "DELETE",
               url: path,

@@ -82,13 +82,6 @@
                     Laravel
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">It</a>
-                    <a href="https://laracasts.com">is</a>
-                    <a href="https://laravel-news.com">Hoàng</a>
-                    <a href="https://forge.laravel.com">Babe</a>
-                    <a href="https://github.com/laravel/laravel">!!!!!!!!</a>
-                </div>
             </div>
         </div>
     </body>

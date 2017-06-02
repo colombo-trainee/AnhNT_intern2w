@@ -21,7 +21,6 @@ class CreateListFoodsTable extends Migration
             $table->text('description');
             $table->tinyInteger('category_id');
             $table->tinyInteger('special');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

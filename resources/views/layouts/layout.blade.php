@@ -25,7 +25,13 @@
   <link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
   {{-- DataTables --}}
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
-  
+  <style>
+    #example thead tr th{
+      background-color: lightslategray;
+      color: white;
+    }
+    
+  </style>
  {{--  <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
  <script type="text/javascript" src="{{ asset('js/sweetalert.min.js') }}"></script> --}}
 
@@ -152,7 +158,7 @@
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="{{ asset('img_layout/user2-160x160.jpg')}}" class="user-image" alt="User Image">
-                <span class="hidden-xs">TuấnˆˆEazy</span>
+                <span class="hidden-xs">{{ Auth::user()->name }} <span class="caret"></span></span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
@@ -160,7 +166,7 @@
                   <img src="{{ asset('img_layout/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
 
                   <p>
-                    TuấnˆˆEazy - Web Developer
+                   {{ Auth::user()->name }} - Web Developer
                     <small>Member since Nov. 2012</small>
                   </p>
                 </li>
@@ -185,67 +191,75 @@
                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                   </div>
                   <div class="pull-right">
-                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
-                  </div>
-                </li>
-              </ul>
-            </li>
-            <!-- Control Sidebar Toggle Button -->
-            <li>
-              <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </header>
+                    <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();" class="btn btn-default btn-flat">
+                    Logout
+                  </a>
 
-    <!-- =============================================== -->
-
-    <!-- Left side column. contains the sidebar -->
-    <aside class="main-sidebar">
-      <!-- sidebar: style can be found in sidebar.less -->
-      <section class="sidebar">
-        <!-- Sidebar user panel -->
-        <div class="user-panel">
-          <div class="pull-left image">
-            <img src="{{ asset('img_layout/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
-          </div>
-          <div class="pull-left info">
-            <p>TuấnˆˆEazy</p>
-            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-          </div>
-        </div>
-        <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-          <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search...">
-            <span class="input-group-btn">
-              <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-              </button>
-            </span>
-          </div>
-        </form>
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
-        {{-- START MENU RIGHT --}}
-        <ul class="sidebar-menu " data-widget="tree">
-
-          <li class="header">MAIN NAVIGATION</li>
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-dashboard"></i> <span>Restaurant</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li><a href="{{ route('list-food.index') }}"><i class="fa fa-circle-o "></i>List Food</a></li>
-              <li><a href="{{ route('menu-top.index') }}"><i class="fa fa-circle-o"></i>Menu Top</a></li>
-              <li><a href="{{ route('category.index') }}"><i class="fa fa-circle-o"></i>Category Food</a></li>
-              <li><a href="{{ route('order-table.index') }}"><i class="fa fa-circle-o"></i>Order Table</a></li>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    {{ csrf_field() }}
+                  </form>
+                </div>
+              </li>
             </ul>
           </li>
-          <li class="header"><a href="/home">Restaurant Home</a></li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- =============================================== -->
+
+  <!-- Left side column. contains the sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="{{ asset('img_layout/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+          <p>{{ Auth::user()->name }}</p>
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <!-- search form -->
+      <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
+      </form>
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      {{-- START MENU RIGHT --}}
+      <ul class="sidebar-menu " data-widget="tree">
+
+        <li class="header">MAIN NAVIGATION</li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Restaurant</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('list-food.index') }}"><i class="fa fa-circle-o "></i>List Food</a></li>
+            <li><a href="{{ route('menu-top.index') }}"><i class="fa fa-circle-o"></i>Menu Top</a></li>
+            <li><a href="{{ route('category.index') }}"><i class="fa fa-circle-o"></i>Category Food</a></li>
+            <li><a href="{{ route('order-table.index') }}"><i class="fa fa-circle-o"></i>Order Table</a></li>
+          </ul>
+        </li>
+        <li class="header"><a href="/home">Restaurant Home</a></li>
         {{-- <li class="header">LABELS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
@@ -482,7 +496,7 @@
 </div>
 <!-- ./wrapper -->
 {{-- Toastr --}}
-
+<script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/notify.js') }}"></script>  
 <script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
 <!-- Bootstrap 3.3.7 -->
@@ -499,15 +513,13 @@
 {{-- DataTables --}}
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-  
-  
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script>
-  $( function() {
-    $( "#sortable" ).sortable();
-    $( "#sortable" ).disableSelection();
-  } );
-  </script>
+
+
+<script type="text/javascript">
+
+  $(function() {
+     $('#example').DataTable();
+  });
+</script>
 </body>
 </html>

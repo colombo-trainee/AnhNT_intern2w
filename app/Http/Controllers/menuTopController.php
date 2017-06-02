@@ -15,6 +15,10 @@ class menuTopController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware("auth");
+    }
     public function index()
     {
         // $data =  menuTop::all();
@@ -92,7 +96,7 @@ class menuTopController extends Controller
     public function show($id)
     {
         $menu  = menuTop::find($id);    
-        $data_all = menuTop::orderBy('order','asc')->get();
+        $data_all = menuTop::orderBy('order','asc')->orderBy('name','asc')->get();
         return view('menu-top.show',compact('menu','data_all'));
     }
 

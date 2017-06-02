@@ -19,7 +19,6 @@ class CreateOrderTablesTable extends Migration
             $table->string('email');
             $table->date('date');
             $table->integer('partyNumber');
-            $table->SoftDeletes();
             $table->timestamps();
         });
     }

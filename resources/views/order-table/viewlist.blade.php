@@ -42,7 +42,7 @@
 				<td>{{$data->email}}</td>
 				<td>{{date('d/m/Y',strtotime($data->date))}}</td>
 				<td class="text-right" >{{$data->partyNumber}}</td>
-				<td>{{date('H:i:s d/mY',strtotime($data->created_at))}}</td>
+				<td>{{date('H:i:s d/m/Y',strtotime($data->created_at))}}</td>
 				<td class="text-center"> 
 					<a href="{{ route('order-table.show',$data->id) }}" class="btn btn-success">
 						<i class="fa fa-eye" aria-hidden="true"></i> Detail 
@@ -116,10 +116,6 @@
 		});
 	}   
 </script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#example').DataTable();
-	} );
-</script>
+
 @endsection
 
