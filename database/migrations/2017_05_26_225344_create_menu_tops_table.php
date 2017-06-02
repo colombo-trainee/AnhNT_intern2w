@@ -17,6 +17,7 @@ class CreateMenuTopsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('order');
+            $table->string("slug_name");
             $table->timestamps();
         });
     }
