@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\models\orderTable;
+use App\Models\orderTable;
 use Faker\Factory as Faker;
 class orderTablesTableSeeder extends Seeder
 {

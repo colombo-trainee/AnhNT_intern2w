@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\models\listFood;
+use App\Models\listFood;
 class listFoodsTableSeeder extends Seeder
 {
     /**
