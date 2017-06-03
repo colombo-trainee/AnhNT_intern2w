@@ -189,11 +189,11 @@
 
 						<button type="submit" class="btn btn-orange" id="submit" style="display: block;margin: 0 auto;">Book now!</button>
 					</form>
-					<div class="modal fade in" id="myModal" role="dialog">
+					<div class="modal fade in" id="myModal" role="dialog" style="background: rgba(0, 0, 0, 0.45098)">
 						    <div class="modal-dialog">
 						    
 						      <!-- Modal content-->
-						      <div class="modal-content">
+						      <div class="modal-content" style="margin-top: 100px;">
 						        <div class="modal-header">
 						          <button type="button" class="close btn btn-danger" data-dismiss="modal" style="background: red;">Close</button>
 						          <h1 class="modal-title title_reservations">Confirm</h1>
