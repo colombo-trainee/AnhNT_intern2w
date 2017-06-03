@@ -16,7 +16,6 @@
   <link rel="stylesheet" href="{{ asset('css_layout/AdminLTE.min.css')}}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('css_layout/iCheck/square/blue.css') }}">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -27,7 +26,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background: {{ url('img/39582710-rog.jpg') }};background-attachment: fixed;">
     <div class="login-box">
       <div class="login-logo">
         <a href="/admin"><b>Admin</b>LTE</a>
