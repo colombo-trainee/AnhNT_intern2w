@@ -259,7 +259,7 @@
             <li><a href="{{ route('order-table.index') }}"><i class="fa fa-circle-o"></i>Order Table</a></li>
           </ul>
         </li>
-        <li class="header"><a href="/home">Restaurant Home</a></li>
+        <li class="header"><a href="/">Restaurant Home</a></li>
         {{-- <li class="header">LABELS</li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
