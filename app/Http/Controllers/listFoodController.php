@@ -85,7 +85,7 @@ class ListFoodController extends Controller
                     'image'   => $data['image'],
                     'price'    => $data['price'],
                     'description' => $data['description'],
-                    'Category_id' => $data['Category_id'],
+                    'category_id' => $data['category_id'],
                     'special' => $data['special'],                   
                     ]);        
                 DB::commit();
@@ -168,7 +168,7 @@ class ListFoodController extends Controller
                         'price'    => $data['price'],
                         'image' => $data['image'],
                         'description' => $data['description'],
-                        'Category_id' => $data['Category_id'],
+                        'category_id' => $data['category_id'],
                         'special' => $data['special'],                   
                         ]);        
                     DB::commit();
@@ -189,7 +189,7 @@ class ListFoodController extends Controller
                         'name' => $data['name'],
                         'price'    => $data['price'],
                         'description' => $data['description'],
-                        'Category_id' => $data['Category_id'],
+                        'category_id' => $data['category_id'],
                         'special' => $data['special'],                   
                         ]);        
                     DB::commit();
