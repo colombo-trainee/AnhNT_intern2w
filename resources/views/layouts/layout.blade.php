@@ -254,10 +254,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{ route('list-food.index') }}"><i class="fa fa-circle-o "></i>List Food</a></li>
-            <li><a href="{{ route('menu-top.index') }}"><i class="fa fa-circle-o"></i>Menu Top</a></li>
-            <li><a href="{{ route('category.index') }}"><i class="fa fa-circle-o"></i>Category Food</a></li>
-            <li><a href="{{ route('order-table.index') }}"><i class="fa fa-circle-o"></i>Order Table</a></li>
+            <li><a href="{{ route('List-food.index') }}"><i class="fa fa-circle-o "></i>List Food</a></li>
+            <li><a href="{{ route('Menu-top.index') }}"><i class="fa fa-circle-o"></i>Menu Top</a></li>
+            <li><a href="{{ route('Category.index') }}"><i class="fa fa-circle-o"></i>Category Food</a></li>
+            <li><a href="{{ route('Order-table.index') }}"><i class="fa fa-circle-o"></i>Order Table</a></li>
           </ul>
         </li>
         <li class="header"><a href="/">Restaurant Home</a></li>
