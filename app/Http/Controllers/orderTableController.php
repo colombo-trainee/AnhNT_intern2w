@@ -20,7 +20,7 @@ class OrderTableController extends Controller
     public function index()
     {
         $datas = OrderTable::orderBy('id','desc')->get();
-        return view('Order-table.viewlist',compact('datas'));
+        return view('order-table.viewlist',compact('datas'));
     }
 
     /**
@@ -30,7 +30,7 @@ class OrderTableController extends Controller
      */
     public function create()
     {
-        return view('Order-table.create');
+        return view('order-table.create');
     }
 
     /**
@@ -104,7 +104,7 @@ class OrderTableController extends Controller
     public function show($id)
     {
         $data = OrderTable::find($id);
-        return view('Order-table.show',compact('data'));
+        return view('order-table.show',compact('data'));
     }
 
     /**
@@ -116,7 +116,7 @@ class OrderTableController extends Controller
     public function edit($id)
     {
         $data = OrderTable::find($id);
-        return view('Order-table.edit',compact('data'));
+        return view('order-table.edit',compact('data'));
     }
 
     /**
@@ -154,7 +154,7 @@ class OrderTableController extends Controller
                     ]);        
                 DB::commit();
                 $msg='Đã Sửa thành công';
-                return redirect(route('Order-table.index'))->with('status', $msg);
+                return redirect(route('order-table.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {

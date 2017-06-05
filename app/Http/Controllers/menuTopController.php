@@ -22,9 +22,9 @@ class MenuTopController extends Controller
     public function index()
     {
         // $data =  MenuTop::all();
-        // return view('Menu-top.test');
+        // return view('menu-top.test');
         $datas = MenuTop::orderBy('id','desc')->get();
-        return view('Menu-top.viewlist',compact('datas'));
+        return view('menu-top.viewlist',compact('datas'));
     }
 
     /**
@@ -35,7 +35,7 @@ class MenuTopController extends Controller
     public function create()
     {
         $datas = MenuTop::orderBy('order','asc')->get();
-        return view('Menu-top.create',compact('datas'));
+        return view('menu-top.create',compact('datas'));
     }
 
     /**
@@ -75,7 +75,7 @@ class MenuTopController extends Controller
                     ]);        
                 DB::commit();
                 $msg='Đã thêm thành công';
-                return redirect(route('Menu-top.index'))->with('status', $msg);
+                return redirect(route('menu-top.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {
@@ -97,7 +97,7 @@ class MenuTopController extends Controller
     {
         $menu  = MenuTop::find($id);    
         $data_all = MenuTop::orderBy('order','asc')->orderBy('name','asc')->get();
-        return view('Menu-top.show',compact('menu','data_all'));
+        return view('menu-top.show',compact('menu','data_all'));
     }
 
     /**
@@ -109,7 +109,7 @@ class MenuTopController extends Controller
     public function edit($id)
     {
         $data  = MenuTop::find($id);
-        return view('Menu-top.edit',compact('data'));
+        return view('menu-top.edit',compact('data'));
     }
 
     /**
@@ -145,7 +145,7 @@ class MenuTopController extends Controller
                     ]);        
                 DB::commit();
                     $msg='Đã sửa thành công';
-                    return redirect(route('Menu-top.index'))->with('status', $msg);
+                    return redirect(route('menu-top.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {

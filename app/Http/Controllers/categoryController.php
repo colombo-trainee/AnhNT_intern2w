@@ -22,7 +22,7 @@ class CategoryController extends Controller
     {
         $datas = Category::orderBy('id','desc')->paginate(5);
         $dataFood = ListFood::all();
-        return view('Category.viewlist',compact('datas','dataFood'));
+        return view('category.viewlist',compact('datas','dataFood'));
     }
 
     /**
@@ -32,7 +32,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('Category.create');
+        return view('category.create');
     }
 
     /**
@@ -61,7 +61,7 @@ class CategoryController extends Controller
                     ]);        
                 DB::commit();
                 $msg='Đã thêm thành công';
-                return redirect(route('Category.index'))->with('status', $msg);
+                return redirect(route('category.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {
@@ -83,7 +83,7 @@ class CategoryController extends Controller
     {
         $data = Category::find($id);
         $dataFood = ListFood::all();
-        return view('Category.show',compact('data','dataFood'));
+        return view('category.show',compact('data','dataFood'));
     }
 
     /**
@@ -95,7 +95,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $data = Category::find($id);
-        return view('Category.edit',compact('data'));
+        return view('category.edit',compact('data'));
     }
 
     /**
@@ -125,7 +125,7 @@ class CategoryController extends Controller
                     ]);        
                 DB::commit();
                 $msg='Đã sửa thành công';
-                return redirect(route('Category.index'))->with('status', $msg);
+                return redirect(route('category.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {
@@ -146,7 +146,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $des = Category::find($id);
-        $data_food = ListFood::where('Category_id',$id);
+        $data_food = ListFood::where('category_id',$id);
         if ($data_food->count() >0) {
             $data_food->delete();
         }
