@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\listFood;
-class listFoodsTableSeeder extends Seeder
+use App\Models\ListFood;
+class ListFoodsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +11,7 @@ class listFoodsTableSeeder extends Seeder
      */
     public function run()
     {
-         listFood::create(
+         ListFood::create(
             array(
                 'name'=>'Bimbimbap',
                 'image'=>'img/ss-about1.png',
@@ -21,7 +21,7 @@ class listFoodsTableSeeder extends Seeder
                 'special'=>'0',
             )        
         );
-         listFood::create(
+         ListFood::create(
             array(
                 'name'=>'Gimbap ',
                 'image'=>'img/ss-about1.png',
@@ -31,7 +31,7 @@ class listFoodsTableSeeder extends Seeder
                 'special'=>'1',
             )        
         );
-          listFood::create(
+          ListFood::create(
             array(
                 'name'=>'Hobakjuk',
                 'image'=>'img/ss-about1.png',
@@ -41,7 +41,7 @@ class listFoodsTableSeeder extends Seeder
                 'special'=>'0',
             )        
         );
-           listFood::create(
+           ListFood::create(
             array(
                 'name'=>'Naengmyeon ',
                 'image'=>'img/ss-about1.png',
@@ -51,7 +51,7 @@ class listFoodsTableSeeder extends Seeder
                 'special'=>'0',
             )        
         );
-            listFood::create(
+            ListFood::create(
             array(
                 'name'=>'Samgyetang ',
                 'image'=>'img/ss-about1.png',
@@ -61,7 +61,7 @@ class listFoodsTableSeeder extends Seeder
                 'special'=>'1',
             )        
         );
-        listFood::create(
+        ListFood::create(
             array(
                 'name'=>'Soondubu  ',
                 'image'=>'img/ss-about1.png',

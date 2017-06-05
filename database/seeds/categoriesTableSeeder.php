@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\category;
-class categoriesTableSeeder extends Seeder
+use App\Models\Category;
+class CategoriesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,22 +11,22 @@ class categoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        category::create(
+        Category::create(
             array(
                 'name'=>'Appetisers',
             )
         ); 
-        category::create(
+        Category::create(
             array(
                 'name'=>'Starters',
             )
         );
-        category::create(
+        Category::create(
             array(
                 'name'=>'Main Dishes',
             )
         );
-        category::create(
+        Category::create(
             array(
                 'name'=>'Salads',
             )

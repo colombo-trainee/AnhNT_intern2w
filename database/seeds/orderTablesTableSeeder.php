@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\orderTable;
+use App\Models\OrderTable;
 use Faker\Factory as Faker;
-class orderTablesTableSeeder extends Seeder
+class OrderTablesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class orderTablesTableSeeder extends Seeder
     {
         $faker = Faker::create();
         for ($i=0 ; $i < 10; $i++) { 
-        		$data = new orderTable;
+        		$data = new OrderTable;
 	            $data->name = $faker->name;
 	            $data->email = $faker->email;
 	            $data->date = $faker->date($format = 'Y-m-d', $max = 'now');

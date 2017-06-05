@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\menuTop;
+use App\Models\MenuTop;
 
-class menuTopTableSeeder extends Seeder
+class MenuTopTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,35 +12,35 @@ class menuTopTableSeeder extends Seeder
      */
     public function run()
     {
-        menuTop::create(
+        MenuTop::create(
             array(
                 'name'=>'About',
                 'order'=>'1',
                 'slug_name'=>'about',
             )        
         );
-        menuTop::create(
+        MenuTop::create(
             array(
                 'name'=>'Igredients',
                 'order'=>'2',
                  'slug_name'=>'igredients',
             )        
         );
-        menuTop::create(
+        MenuTop::create(
             array(
                 'name'=>'Menu',
                 'order'=>'3',
                  'slug_name'=>'menu',
             )        
         );
-        menuTop::create(
+        MenuTop::create(
             array(
                 'name'=>'Reviews',
                 'order'=>'4',
                  'slug_name'=>'reviews',
             )        
         );
-        menuTop::create(
+        MenuTop::create(
             array(
                 'name'=>'Reservations',
                 'order'=>'5',
