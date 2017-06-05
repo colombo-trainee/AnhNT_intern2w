@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\orderTable;
+use App\Models\OrderTable;
 use Illuminate\Support\Facades\Validator as Validator;
 use DB;
-class orderTableController extends Controller
+class OrderTableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +19,8 @@ class orderTableController extends Controller
     }
     public function index()
     {
-        $datas = orderTable::orderBy('id','desc')->get();
-        return view('order-table.viewlist',compact('datas'));
+        $datas = OrderTable::orderBy('id','desc')->get();
+        return view('Order-table.viewlist',compact('datas'));
     }
 
     /**
@@ -30,7 +30,7 @@ class orderTableController extends Controller
      */
     public function create()
     {
-        return view('order-table.create');
+        return view('Order-table.create');
     }
 
     /**
@@ -70,7 +70,7 @@ class orderTableController extends Controller
                 DB::beginTransaction();
 
                 try {
-                    orderTable::create([
+                    OrderTable::create([
                         'name' => $dataE['name'],
                         'email'   => $dataE['email'],
                         'date'    => $dataE['date'],
@@ -103,8 +103,8 @@ class orderTableController extends Controller
      */
     public function show($id)
     {
-        $data = orderTable::find($id);
-        return view('order-table.show',compact('data'));
+        $data = OrderTable::find($id);
+        return view('Order-table.show',compact('data'));
     }
 
     /**
@@ -115,8 +115,8 @@ class orderTableController extends Controller
      */
     public function edit($id)
     {
-        $data = orderTable::find($id);
-        return view('order-table.edit',compact('data'));
+        $data = OrderTable::find($id);
+        return view('Order-table.edit',compact('data'));
     }
 
     /**
@@ -146,7 +146,7 @@ class orderTableController extends Controller
             DB::beginTransaction();
 
             try {
-                orderTable::find($id)->update([
+                OrderTable::find($id)->update([
                     'name' => $data['name'],
                     'email'   => $data['email'],
                     'date'    => $data['date'],
@@ -154,7 +154,7 @@ class orderTableController extends Controller
                     ]);        
                 DB::commit();
                 $msg='Đã Sửa thành công';
-                return redirect(route('order-table.index'))->with('status', $msg);
+                return redirect(route('Order-table.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {
@@ -174,7 +174,7 @@ class orderTableController extends Controller
      */
     public function destroy($id)
     {
-        orderTable::find($id)->delete();
+        OrderTable::find($id)->delete();
         return response()->json(['error' => false]);
     }
 }

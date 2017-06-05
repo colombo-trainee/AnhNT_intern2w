@@ -4,7 +4,7 @@ namespace App\Models;
 	
 use Illuminate\Database\Eloquent\Model;
 
-class orderTable extends Model
+class OrderTable extends Model
 {
 	protected $fillable = [
 	'name', 'email','date','partyNumber',

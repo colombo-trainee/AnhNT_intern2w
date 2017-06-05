@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\menuTop;
+use App\Models\MenuTop;
 use Illuminate\Support\Facades\Validator as Validator;
 use DB;
 
 
-class menuTopController extends Controller
+class MenuTopController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,10 +21,10 @@ class menuTopController extends Controller
     }
     public function index()
     {
-        // $data =  menuTop::all();
-        // return view('menu-top.test');
-        $datas = menuTop::orderBy('id','desc')->get();
-        return view('menu-top.viewlist',compact('datas'));
+        // $data =  MenuTop::all();
+        // return view('Menu-top.test');
+        $datas = MenuTop::orderBy('id','desc')->get();
+        return view('Menu-top.viewlist',compact('datas'));
     }
 
     /**
@@ -34,8 +34,8 @@ class menuTopController extends Controller
      */
     public function create()
     {
-        $datas = menuTop::orderBy('order','asc')->get();
-        return view('menu-top.create',compact('datas'));
+        $datas = MenuTop::orderBy('order','asc')->get();
+        return view('Menu-top.create',compact('datas'));
     }
 
     /**
@@ -68,14 +68,14 @@ class menuTopController extends Controller
             DB::beginTransaction();
 
             try {
-                menuTop::create([
+                MenuTop::create([
                     'name'   => ucfirst($data['name']),
                     'slug_name'    => str_slug(strtolower($data['name'])),  
                     'order' => $data['order'],              
                     ]);        
                 DB::commit();
                 $msg='Đã thêm thành công';
-                return redirect(route('menu-top.index'))->with('status', $msg);
+                return redirect(route('Menu-top.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {
@@ -95,9 +95,9 @@ class menuTopController extends Controller
      */
     public function show($id)
     {
-        $menu  = menuTop::find($id);    
-        $data_all = menuTop::orderBy('order','asc')->orderBy('name','asc')->get();
-        return view('menu-top.show',compact('menu','data_all'));
+        $menu  = MenuTop::find($id);    
+        $data_all = MenuTop::orderBy('order','asc')->orderBy('name','asc')->get();
+        return view('Menu-top.show',compact('menu','data_all'));
     }
 
     /**
@@ -108,8 +108,8 @@ class menuTopController extends Controller
      */
     public function edit($id)
     {
-        $data  = menuTop::find($id);
-        return view('menu-top.edit',compact('data'));
+        $data  = MenuTop::find($id);
+        return view('Menu-top.edit',compact('data'));
     }
 
     /**
@@ -138,20 +138,20 @@ class menuTopController extends Controller
             DB::beginTransaction();
 
             try {
-                menuTop::find($id)->update([
+                MenuTop::find($id)->update([
                     'name'   => ucfirst($data['name']),
                     'slug_name'    => str_slug(strtolower($data['name'])),  
                     'order' => $data['order'],              
                     ]);        
                 DB::commit();
                     $msg='Đã sửa thành công';
-                    return redirect(route('menu-top.index'))->with('status', $msg);
+                    return redirect(route('Menu-top.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {
                 \Log::info($e->getMessage());
                 DB::rollback();
-                            // something went wrong
+                            // something went wrong 
             }
             
         }
@@ -165,7 +165,7 @@ class menuTopController extends Controller
      */
     public function destroy($id)
     {
-        menuTop::find($id)->delete();
+        MenuTop::find($id)->delete();
         return response()->json(['error' => false]);
     }
 }

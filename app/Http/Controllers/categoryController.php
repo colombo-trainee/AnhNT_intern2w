@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\category;
-use App\Models\listFood;
+use App\Models\Category;
+use App\Models\ListFood;
 use Illuminate\Support\Facades\Validator as Validator;
 use DB;
-class categoryController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +20,9 @@ class categoryController extends Controller
     }
     public function index()
     {
-        $datas = category::orderBy('id','desc')->paginate(5);
-        $dataFood = listFood::all();
-        return view('category.viewlist',compact('datas','dataFood'));
+        $datas = Category::orderBy('id','desc')->paginate(5);
+        $dataFood = ListFood::all();
+        return view('Category.viewlist',compact('datas','dataFood'));
     }
 
     /**
@@ -32,7 +32,7 @@ class categoryController extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        return view('Category.create');
     }
 
     /**
@@ -56,12 +56,12 @@ class categoryController extends Controller
             DB::beginTransaction();
 
             try {
-                category::create([
+                Category::create([
                     'name' => $data['name'],             
                     ]);        
                 DB::commit();
                 $msg='Đã thêm thành công';
-                return redirect(route('category.index'))->with('status', $msg);
+                return redirect(route('Category.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {
@@ -81,9 +81,9 @@ class categoryController extends Controller
      */
     public function show($id)
     {
-        $data = category::find($id);
-        $dataFood = listFood::all();
-        return view('category.show',compact('data','dataFood'));
+        $data = Category::find($id);
+        $dataFood = ListFood::all();
+        return view('Category.show',compact('data','dataFood'));
     }
 
     /**
@@ -94,8 +94,8 @@ class categoryController extends Controller
      */
     public function edit($id)
     {
-        $data = category::find($id);
-        return view('category.edit',compact('data'));
+        $data = Category::find($id);
+        return view('Category.edit',compact('data'));
     }
 
     /**
@@ -120,12 +120,12 @@ class categoryController extends Controller
             DB::beginTransaction();
 
             try {
-                category::find($id)->update([
+                Category::find($id)->update([
                     'name' => $data['name'],             
                     ]);        
                 DB::commit();
                 $msg='Đã sửa thành công';
-                return redirect(route('category.index'))->with('status', $msg);
+                return redirect(route('Category.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {
@@ -145,8 +145,8 @@ class categoryController extends Controller
      */
     public function destroy($id)
     {
-        $des = category::find($id);
-        $data_food = listFood::where('category_id',$id);
+        $des = Category::find($id);
+        $data_food = ListFood::where('Category_id',$id);
         if ($data_food->count() >0) {
             $data_food->delete();
         }

@@ -5,7 +5,7 @@ namespace App\Models;
 // use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class listFood extends Model
+class ListFood extends Model
 {
 	// use SoftDeletes;
 	protected $fillable = [
@@ -14,6 +14,7 @@ class listFood extends Model
 	// protected $dates = ['deleted_at'];
 	public function category()
 	{
-		return $this->belongsTo('App\Models\category', 'category_id');
+		return $this->belongsTo('App\Models\Category', 'category_id');
 	}
+	protected $table = 'list_foods';
 }

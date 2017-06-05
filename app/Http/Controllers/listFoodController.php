@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\listFood;
+use App\Models\ListFood;
 use Illuminate\Support\Facades\Route;
-use App\Models\category;
+use App\Models\Category;
 use Illuminate\Support\Facades\Validator as Validator;
 use DB;
 use Illuminate\Http\UploadedFile;
-class listFoodController extends Controller
+class ListFoodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,8 +23,8 @@ class listFoodController extends Controller
     }
     public function index()
     {
-        $datas = listFood::orderBy('id', 'desc')->get();
-        return view('list-food.viewlist',compact('datas'));
+        $datas = ListFood::orderBy('id', 'desc')->get();
+        return view('List-food.viewlist',compact('datas'));
     }
 
     /**
@@ -34,8 +34,8 @@ class listFoodController extends Controller
      */
     public function create()
     {
-        $datas = category::all();
-        return view('list-food.create',compact('datas'));
+        $datas = Category::all();
+        return view('List-food.create',compact('datas'));
     }
     /**
      * Store a newly created resource in storage.
@@ -80,17 +80,17 @@ class listFoodController extends Controller
             DB::beginTransaction();
 
             try {
-                listFood::create([
+                ListFood::create([
                     'name' => $data['name'],
                     'image'   => $data['image'],
                     'price'    => $data['price'],
                     'description' => $data['description'],
-                    'category_id' => $data['category_id'],
+                    'Category_id' => $data['Category_id'],
                     'special' => $data['special'],                   
                     ]);        
                 DB::commit();
                 $msg='Đã thêm thành công';
-                return redirect(route('list-food.index'))->with('status', $msg);
+                return redirect(route('List-food.index'))->with('status', $msg);
 
                             // all good
             } catch (\Exception $e) {
@@ -111,8 +111,8 @@ class listFoodController extends Controller
      */
     public function show($id)
     {
-        $data = listFood::find($id);
-        return view('list-food.show',compact('data'));
+        $data = ListFood::find($id);
+        return view('List-food.show',compact('data'));
     }
 
     /**
@@ -123,9 +123,9 @@ class listFoodController extends Controller
      */
     public function edit($id)
     {
-        $data = listFood::find($id);
-        $datas_cate = category::all();
-        return view('list-food.edit',compact('data','datas_cate'));
+        $data = ListFood::find($id);
+        $datas_cate = Category::all();
+        return view('List-food.edit',compact('data','datas_cate'));
     }
 
     /**
@@ -163,17 +163,17 @@ class listFoodController extends Controller
                  DB::beginTransaction();
 
                  try {
-                    listFood::find($id)->update([
+                    ListFood::find($id)->update([
                         'name' => $data['name'],
                         'price'    => $data['price'],
                         'image' => $data['image'],
                         'description' => $data['description'],
-                        'category_id' => $data['category_id'],
+                        'Category_id' => $data['Category_id'],
                         'special' => $data['special'],                   
                         ]);        
                     DB::commit();
                     $msg='Đã sửa thành công';
-                    return redirect(route('list-food.index'))->with('status', $msg);
+                    return redirect(route('List-food.index'))->with('status', $msg);
 
                                         // all good
                 } catch (\Exception $e) {
@@ -185,16 +185,16 @@ class listFoodController extends Controller
                 DB::beginTransaction();
 
                 try {
-                    listFood::find($id)->update([
+                    ListFood::find($id)->update([
                         'name' => $data['name'],
                         'price'    => $data['price'],
                         'description' => $data['description'],
-                        'category_id' => $data['category_id'],
+                        'Category_id' => $data['Category_id'],
                         'special' => $data['special'],                   
                         ]);        
                     DB::commit();
                     $msg='Đã sửa thành công';
-                    return redirect(route('list-food.index'))->with('status', $msg);
+                    return redirect(route('List-food.index'))->with('status', $msg);
 
                                         // all good
                 } catch (\Exception $e) {
@@ -215,11 +215,11 @@ class listFoodController extends Controller
      */
     public function destroy($id)
     {
-        $des = listFood::find($id);
+        $des = ListFood::find($id);
         $des->delete();
-        $datas = listFood::orderBy('id', 'desc')->paginate(5);
+        $datas = ListFood::orderBy('id', 'desc')->paginate(5);
 
-        return view('list-food.viewlist',compact('datas'))->with('status','Deleted!');
+        return view('List-food.viewlist',compact('datas'))->with('status','Deleted!');
 
     }
     // public function index_admin()
