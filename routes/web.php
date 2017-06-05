@@ -17,10 +17,10 @@ Route::get('/','RestHomeController@index');
 
 Route::group(['prefix' => 'admin'], function () {
 	Route::get('/','AdminController@index');
-	Route::resource('menu-top','menuTopController');
-	Route::resource('list-food','listFoodController');
-	Route::resource('category','categoryController');
-	Route::resource('order-table','orderTableController');
+	Route::resource('menu-top','MenuTopController');
+	Route::resource('list-food','ListFoodController');
+	Route::resource('category','CategoryController');
+	Route::resource('order-table','OrderTableController');
 	
 });
 
