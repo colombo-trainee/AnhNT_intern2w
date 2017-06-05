@@ -164,10 +164,10 @@ class ListFoodController extends Controller
 
                  try {
                     ListFood::find($id)->update([
-                        'name' => $data['name'],
+                        'name' => ucfirst($data['name']),
                         'price'    => $data['price'],
                         'image' => $data['image'],
-                        'description' => $data['description'],
+                        'description' => ucfirst($data['description']),
                         'category_id' => $data['category_id'],
                         'special' => $data['special'],                   
                         ]);        
@@ -186,9 +186,9 @@ class ListFoodController extends Controller
 
                 try {
                     ListFood::find($id)->update([
-                        'name' => $data['name'],
+                        'name' => ucfirst($data['name']),
                         'price'    => $data['price'],
-                        'description' => $data['description'],
+                        'description' => ucfirst($data['description']),
                         'category_id' => $data['category_id'],
                         'special' => $data['special'],                   
                         ]);        

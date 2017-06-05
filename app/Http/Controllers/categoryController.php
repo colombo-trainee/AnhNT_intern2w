@@ -57,7 +57,7 @@ class CategoryController extends Controller
 
             try {
                 Category::create([
-                    'name' => $data['name'],             
+                    'name' => ucfirst($data['name']),             
                     ]);        
                 DB::commit();
                 $msg='Đã thêm thành công';
@@ -121,7 +121,7 @@ class CategoryController extends Controller
 
             try {
                 Category::find($id)->update([
-                    'name' => $data['name'],             
+                    'name' => ucfirst($data['name']),             
                     ]);        
                 DB::commit();
                 $msg='Đã sửa thành công';

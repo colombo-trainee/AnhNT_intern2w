@@ -71,7 +71,7 @@ class OrderTableController extends Controller
 
                 try {
                     OrderTable::create([
-                        'name' => $dataE['name'],
+                        'name' => ucfirst($dataE['name']),
                         'email'   => $dataE['email'],
                         'date'    => $dataE['date'],
                         'partyNumber' => $dataE['partyNumber'],                
@@ -147,7 +147,7 @@ class OrderTableController extends Controller
 
             try {
                 OrderTable::find($id)->update([
-                    'name' => $data['name'],
+                    'name' => ucfirst($data['name']),
                     'email'   => $data['email'],
                     'date'    => $data['date'],
                     'partyNumber' => $data['partyNumber'],                
