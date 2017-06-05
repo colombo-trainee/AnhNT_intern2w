@@ -25,6 +25,7 @@
   <link rel='stylesheet' href='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.css'>
   {{-- DataTables --}}
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+  <script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
   <style>
     #example thead tr th{
       background-color: lightslategray;
@@ -496,7 +497,7 @@
 </div>
 <!-- ./wrapper -->
 {{-- Toastr --}}
-<script type="text/javascript" src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('js/notify.js') }}"></script>  
 <script src="{{asset('js/toastr.min.js')}}" type="text/javascript"></script>
 <!-- Bootstrap 3.3.7 -->

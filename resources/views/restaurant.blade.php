@@ -310,6 +310,7 @@
 			
 		});
 	$('#order_table').on('submit',function(e){
+      		$('#submit').prop('disabled',true);
 			$('.al_name').text($("#name").val());
 			$('.al_email').text($("#email").val());
 			$('.al_date').text($("#date").val());
@@ -337,7 +338,6 @@
       	success:function(dataE){
       		if(!dataE.error) {
       			toastr.success('Đặt bàn thành công !, Xin cảm ơn quý khách');
-      			$('#submit').prop('disabled',true);
       			$('.date').removeClass('has-error');
       			$('.name').removeClass('has-error');
       			$('.email').removeClass('has-error');

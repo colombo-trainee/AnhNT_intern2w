@@ -55,7 +55,15 @@
 	</table>
 </div>
 @if (session('status'))
-<script>$.notify("{{session('status')}}", "success");</script></div>
+	<script>
+		jQuery.noConflict();
+		(function( $ ) {
+		  $(function() {
+		    toastr.success('{{session('status')}}');
+		  });
+		})(jQuery);
+		
+	</script>
 @endif
 
 

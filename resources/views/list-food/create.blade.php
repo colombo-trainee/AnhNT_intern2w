@@ -17,16 +17,16 @@
 
 @section('content')
 @if (count($errors) > 0)
-		<div class="alert alert-danger">
-			<strong>Whoops!</strong> There were some problems with your input.<br><br>
-			<ul>
-				@foreach ($errors->all() as $error)
-					<li>{{ $error }}x</li>
-				@endforeach
-			</ul>
-		</div>
-	@endif
-<form action="{{ route('list-food.store') }}" method="POST" role="form" class="col-md-6" enctype='multipart/form-data'>
+<div class="alert alert-danger">
+	<strong>Whoops!</strong> There were some problems with your input.<br><br>
+	<ul>
+		@foreach ($errors->all() as $error)
+		<li>{{ $error }}x</li>
+		@endforeach
+	</ul>
+</div>
+@endif
+<form action="{{ route('list-food.store') }}" method="POST" role="form" class="col-md-6" enctype='multipart/form-data' id="listFood">
 	{{csrf_field()}}
 
 
@@ -63,10 +63,11 @@
 		</select>
 	</div>
 
-	<button type="submit" class="btn btn-primary">Save</button>
+	<button type="submit" id="submit" class="btn btn-primary">Save</button>
 	<button type="reset" class="btn btn-default" style="background: gray">Reset</button>
 	<a href="{{ route('list-food.index') }}" class="btn btn-info">Quay lại</a>
 </form>
+
 
 @endsection
 

@@ -79,7 +79,15 @@
 
 		</table>
 @if (session('status'))
-<script>$.notify("{{session('status')}}", "success");</script></div>
+	<script>
+		jQuery.noConflict();
+		(function( $ ) {
+		  $(function() {
+		    toastr.success('{{session('status')}}');
+		  });
+		})(jQuery);
+		
+	</script>
 @endif
 <script>
 	function alertDel(id){
@@ -127,10 +135,6 @@
     });
  }   
 </script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#example').DataTable();
-	} );
-</script>
+
 @endsection
 

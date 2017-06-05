@@ -22,7 +22,7 @@
 @endsection
 @section('content')
 <div class="row">
-<table style="margin-left:1%;" class="col-md-4">
+	<table style="margin-left:1%;" class="col-md-4">
 		<thead> 
 			<tr>
 				<th>Name : </th>
@@ -33,6 +33,18 @@
 			<tr>
 				<th>Order : </th>
 				<td>{{$menu->order}}</td>
+			</tr>
+			<tr>
+				<th>Created At</th>
+				<td>
+					{{date('H:i:s d/m/Y',strtotime($menu->created_at))}}
+				</td>
+			</tr>
+			<tr>
+				<th>Updated At</th>
+				<td>
+					{{date('H:i:s d/m/Y',strtotime($menu->updated_at))}}
+				</td>
 			</tr>
 		</tbody>
 	</table>
